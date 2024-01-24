@@ -1,0 +1,22 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+asgiref = "==3.7.2"
+django = "==5.*"
+sqlparse = "==0.4.4"
+typing-extensions = "==4.9.0"
+tzdata = "==2023.4"
+
+[dev-packages]
+
+[requires]
+python_version = "3.12"
+python_full_version = "3.12.1"
+
+[scripts]
+server = "python challenges/manage.py runserver"
+migrate = "python challenges/manage.py migrate"
+makemigrations = "python challenges/manage.py makemigrations"
