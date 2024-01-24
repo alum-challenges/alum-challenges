@@ -9,6 +9,7 @@ The title is not yet official. We don't need to worry about aesteatics until the
 - Expand the portfolio of CS50 alumns.
 
 ## TODO:
+These are the steps needed to create a minimum viable product (MVP)
 - Log in via OAuth
 - View problems
 - Use check50 to validate
