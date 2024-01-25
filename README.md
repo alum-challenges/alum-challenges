@@ -16,4 +16,4 @@ These are the steps needed to create a minimum viable product (MVP)
 - Submit50 to push solution
 - See what you solved
 
-Note: This project is an initiative of enthousiastic CS50 alums. This project is not part of or endorsed by CS50. The entire project is unofficial.
+Note: This project is an initiative of enthousiastic CS50 alums. This project is not part of or endorsed by CS50, HarvardX or Harvard University. The entire project is unofficial.
