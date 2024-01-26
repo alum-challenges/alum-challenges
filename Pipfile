@@ -17,6 +17,6 @@ python_version = "3.12"
 python_full_version = "3.12.1"
 
 [scripts]
-server = "python challenges/manage.py runserver"
-migrate = "python challenges/manage.py migrate"
-makemigrations = "python challenges/manage.py makemigrations"
+server = "python /manage.py runserver"
+migrate = "python /manage.py migrate"
+makemigrations = "python /manage.py makemigrations"
