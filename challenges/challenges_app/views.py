@@ -37,6 +37,36 @@ def logout_view(request):
 
 
 def signup_view(request):
+    if request.method == "POST":
+        nickname = str(request.POST.get("nickname"))
+        password = str(request.POST.get("password"))
+        confirm = str(request.POST.get("confirm"))
+
+        if len(nickname) < 3:
+            return render(
+                request,
+                "accounts/signup.html",
+                {"message": "Nickname must be at least 3 characters long."},
+            )
+        elif password != confirm:
+            return render(
+                request,
+                "accounts/signup.html",
+                {"message": "Passwords you have entered must be the same."},
+            )
+        elif len(password) < 8:
+            return render(
+                request,
+                "accounts/signup.html",
+                {"message": "Password must be at least 8 characters long"},
+            )
+
+        user = User(nickname=nickname)
+        user.set_password(password)
+        user.save()
+
+        return redirect("login")
+
     return render(request, "accounts/signup.html")
 
 
@@ -55,3 +85,8 @@ def problem_view(request, title):
         ],
     )
     return render(request, "problem.html", {"title": title, "problem": html})
+
+
+@login_required
+def account():
+    return render(request, "account.html")
