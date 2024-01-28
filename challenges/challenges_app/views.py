@@ -81,8 +81,9 @@ def problem_view(request, title):
         pass
     html = markdown.markdown(
         md,
+        pygments_style="monokai",
         extensions=[
-            "pymdownx.superfences",
+            "pymdownx.hilight",
             "pymdownx.arithmatex",
             "pymdownx.magiclink",
             "pymdownx.blocks.details",

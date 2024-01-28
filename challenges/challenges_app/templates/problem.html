@@ -1,10 +1,11 @@
 {% extends "layout.html" %}
-{% block head%}
+{% block head %}
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 {% endblock %}
-{% block title%}
-{% endblock %}
+{% block title %}{{ title }}{% endblock %}
 {% block body %}
-{{ problem | safe }}
+    <article class="prose prose-slate prose-lg content-center dark:prose-invert w-1/2 p-4 mx-auto">
+        {{ problem | safe }}
+    </article>
 {% endblock %}

@@ -21,4 +21,5 @@ from challenges_app import views
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("challenges_app.urls")),
+    path("__reload__/", include("django_browser_reload.urls")),
 ]

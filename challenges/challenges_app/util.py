@@ -9,7 +9,7 @@ def list_entries():
     """
     Returns a list of all markdown files, without the extension name
     """
-    _, filenames = default_storage.listdir("challenges/problems")
+    _, filenames = default_storage.listdir("problems")
     return list(
         sorted(
             re.sub(r"\.md$", "", filename)
@@ -25,7 +25,7 @@ def save_entry(title, content):
     content. If an existing file with the same title already exists,
     it is replaced.
     """
-    filename = f"challenges/problems/{title}.md"
+    filename = f"problems/{title}.md"
     if default_storage.exists(filename):
         default_storage.delete(filename)
     default_storage.save(filename, ContentFile(content))
@@ -37,7 +37,7 @@ def get_entry(title):
     file exists, the function returns None.
     """
     try:
-        f = default_storage.open(f"challenges/problems/{title}.md")
+        f = default_storage.open(f"problems/{title}.md")
         return f.read().decode("utf-8")
     except FileNotFoundError:
         return None
