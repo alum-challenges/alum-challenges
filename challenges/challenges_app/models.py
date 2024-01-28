@@ -3,9 +3,7 @@ from django.db import models
 
 
 class User(AbstractUser):
-    completed = models.ManyToManyField(
-        "Challenges", related_name="completed", blank=True
-    )
+    pass
 
 
 class Challenges(models.Model):

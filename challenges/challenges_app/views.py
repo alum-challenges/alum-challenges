@@ -1,16 +1,17 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
+import markdown
+from .models import User
+from . import util
 
 
 def index(request):
-    return render(
-        request,
-        "index.html",
-    )
+    print(util.list_entries())
+    return render(request, "index.html", {"problems": util.list_entries()})
 
 
-def login(request):
+def login_view(request):
     if request.method == "POST":
         # Attempt to sign in
         username = request.POST["username"]
@@ -27,13 +28,30 @@ def login(request):
                 "accounts/login.html",
                 {"message": "Invalid username and/or password."},
             )
-
     return render(request, "accounts/login.html")
 
 
-def logout(request):
-    return render(request, "accounts/logout.html")
+def logout_view(request):
+    logout(request)
+    return redirect("index")
 
 
-def signup(request):
+def signup_view(request):
     return render(request, "accounts/signup.html")
+
+
+def problem_view(request, title):
+    md = util.get_entry(title)
+
+    if md == None:
+        pass
+    html = markdown.markdown(
+        md,
+        extensions=[
+            "pymdownx.superfences",
+            "pymdownx.highlight",
+            "pymdownx.arithmatex",
+            "pymdownx.magiclink",
+        ],
+    )
+    return render(request, "problem.html", {"title": title, "problem": html})

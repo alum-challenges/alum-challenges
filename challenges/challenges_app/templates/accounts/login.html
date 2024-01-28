@@ -1,25 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Log In</title>
-    </head>
-    <body>
-        <h1>login</h1>
-        {% if message %}
-            <div>{{ message }}</div>
-        {% endif %}
-        <form action="{% url 'login' %}" method="post">
-            {% csrf_token %}
-            <div class="">
-                <input autofocus class="" type="text" name="username" placeholder="Username">
-            </div>
-            <div class="">
-                <input class="" type="password" name="password" placeholder="Password">
-            </div>
-            <input class="" type="submit" value="Login">
-        </form>
-
-    </body>
-</html>
+{% extends "layout.html" %}
+{% block title %} Log in {% endblock %}
+{% block body %}
+<form action="{% url 'login' %}" method="post">
+    {% csrf_token %}
+    <div class="">
+        <input autofocus class="" type="text" name="username" placeholder="Username">
+    </div>
+    <div class="">
+        <input class="" type="password" name="password" placeholder="Password">
+    </div>
+    <input class="" type="submit" value="Login">
+</form>
+{% endblock %}
