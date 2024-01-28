@@ -1,0 +1,7 @@
+check50:
+  checks:
+    fibonacci:
+      - run: python3 fibonacci.py
+        stdin: 5
+        stdout: 3
+        exit: 0
