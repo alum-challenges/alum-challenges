@@ -12,7 +12,7 @@ def test1():
 
 @check50.check()
 def test2():
-    """Fibonacci function correctly calculates number on 5th place"""
+    """Fibonacci function correctly calculates number on 2nd place"""
     check50.run("python3 fibonacci.py").stdin("2").stdout("1").exit(0)
 
 @check50.check()
