@@ -1,27 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Sign Up</title>
-    </head>
-    <body>
-        <h1>Sign up</h1>
-        {% if message %}
-            <div>{{ message }}</div>
-        {% endif %}
-        <form method="post" action="{% url 'signup' %}">
-            {% csrf_token %}
-            <div class="">
-                <input autofocus class="" type="text" name="username" placeholder="Username" required>
-            </div>
-            <div class="">
-                <input class="" type="password" name="password" placeholder="Password" required>
-            </div>
-            <div class="">
-                <input class="" type="password" name="confirm" placeholder="Confirm password" required>
-            </div>
-            <button class="" type="submit">Sign Up</button>
-        </form>
-    </body>
-</html>
+{% extends "layout.html" %}
+{% block title %}Sign Up{% endblock %}
+
+{% block body %}
+<h1>Sign up</h1>
+{% if message %}
+    <div>{{ message }}</div>
+{% endif %}
+<form method="post" action="{% url 'signup' %}">
+    {% csrf_token %}
+    <div class="">
+        <input autofocus class="" type="text" name="username" placeholder="Username" required>
+    </div>
+    <div class="">
+        <input class="" type="password" name="password" placeholder="Password" required>
+    </div>
+    <div class="">
+        <input class="" type="password" name="confirm" placeholder="Confirm password" required>
+    </div>
+    <button class="" type="submit">Sign Up</button>
+</form>
+{% endblock %}

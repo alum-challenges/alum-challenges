@@ -38,9 +38,9 @@ def logout_view(request):
 
 def signup_view(request):
     if request.method == "POST":
-        nickname = str(request.POST.get("nickname"))
-        password = str(request.POST.get("password"))
-        confirm = str(request.POST.get("confirm"))
+        nickname = request.POST["nickname"]
+        password = request.POST["password"]
+        confirm = request.POST["confirm"]
 
         if len(nickname) < 3:
             return render(
@@ -60,33 +60,37 @@ def signup_view(request):
                 "accounts/signup.html",
                 {"message": "Password must be at least 8 characters long"},
             )
+        # Attempt to create new user
+        try:
+            user = User.objects.create_user(username, password)
+            user.save()
+        except IntegrityError:
+            return render(
+                request, "accounts/signup.html", {"message": "Username taken"}
+            )
 
-        user = User(nickname=nickname)
-        user.set_password(password)
-        user.save()
-
-        return redirect("login")
+        login(request, user)
+        return redirect("index")
 
     return render(request, "accounts/signup.html")
 
 
 def problem_view(request, title):
     md = util.get_entry(title)
-
     if md == None:
         pass
     html = markdown.markdown(
         md,
         extensions=[
             "pymdownx.superfences",
-            "pymdownx.highlight",
             "pymdownx.arithmatex",
             "pymdownx.magiclink",
+            "pymdownx.blocks.details",
         ],
     )
     return render(request, "problem.html", {"title": title, "problem": html})
 
 
 @login_required
-def account():
-    return render(request, "account.html")
+def account(request):
+    return render(request, "accounts/account.html")

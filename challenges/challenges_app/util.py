@@ -7,7 +7,7 @@ from django.core.files.storage import default_storage
 
 def list_entries():
     """
-    Returns a list of all names of encyclopedia entries.
+    Returns a list of all markdown files, without the extension name
     """
     _, filenames = default_storage.listdir("challenges/problems")
     return list(
@@ -21,11 +21,11 @@ def list_entries():
 
 def save_entry(title, content):
     """
-    Saves an encyclopedia entry, given its title and Markdown
-    content. If an existing entry with the same title already exists,
+    Saves a file, given its title and Markdown
+    content. If an existing file with the same title already exists,
     it is replaced.
     """
-    filename = f"problems/{title}.md"
+    filename = f"challenges/problems/{title}.md"
     if default_storage.exists(filename):
         default_storage.delete(filename)
     default_storage.save(filename, ContentFile(content))
@@ -33,11 +33,11 @@ def save_entry(title, content):
 
 def get_entry(title):
     """
-    Retrieves an encyclopedia entry by its title. If no such
-    entry exists, the function returns None.
+    Retrieves a file by its title. If no such
+    file exists, the function returns None.
     """
     try:
-        f = default_storage.open(f"problems/{title}.md")
+        f = default_storage.open(f"challenges/problems/{title}.md")
         return f.read().decode("utf-8")
     except FileNotFoundError:
         return None
