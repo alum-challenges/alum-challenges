@@ -8,12 +8,12 @@ def exists():
 @check50.check()
 def test1():
     """Fibonacci function correctly calculates number on 5th place"""
-    check50.run("python3 fibonacci.py").stdin("5", regex=False).stdout("3", regex=False).exit(0)
+    check50.run("python3 fibonacci.py").stdin("5").stdout("3").exit(0)
 
 @check50.check()
 def test2():
     """Fibonacci function correctly calculates number on 5th place"""
-    check50.run("python3 fibonacci.py").stdin("2", regex=False).stdout("1", regex=False).exit(0)
+    check50.run("python3 fibonacci.py").stdin("2").stdout("1").exit(0)
 
 @check50.check()
 def test3():
