@@ -3,6 +3,7 @@ from django.db import models
 
 
 class User(AbstractUser):
+    nickname = models.CharField(max_length=30, unique=True)
     completed = models.ManyToManyField(
         "Challenges", related_name="completed", blank=True
     )

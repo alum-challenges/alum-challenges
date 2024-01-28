@@ -100,6 +100,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTH_USER_MODEL = "challenges_app.User"
+
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
