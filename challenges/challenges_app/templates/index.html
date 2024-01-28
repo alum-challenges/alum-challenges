@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+{% block title %}Index{% endblock %}
+
+{% block body %}
+<h1>This is a test</h1>
+<ul>
+    {% for problem in problems %}
+    <li><a href="{% url 'problems' problem %}">{{ problem }}</a></li>
+    {% endfor %}
+</ul>
+{% endblock %}

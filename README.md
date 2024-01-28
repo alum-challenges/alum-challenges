@@ -17,3 +17,14 @@ These are the steps needed to create a minimum viable product (MVP)
 - See what you solved
 
 Note: This project is an initiative of enthousiastic CS50 alums. This project is not part of or endorsed by CS50, HarvardX or Harvard University. The entire project is unofficial.
+
+## Usage:
+
+``` shell
+pipenv sync
+pipenv run server
+
+# migrating
+pipenv run makemigrations
+pipenv run migrate
+```
