@@ -81,13 +81,21 @@ def problem_view(request, title):
         pass
     html = markdown.markdown(
         md,
-        pygments_style="monokai",
         extensions=[
-            "pymdownx.hilight",
+            "pymdownx.highlight",
+            "pymdownx.superfences",
             "pymdownx.arithmatex",
             "pymdownx.magiclink",
             "pymdownx.blocks.details",
         ],
+        extension_configs={
+            "pymdownx.highlight": {
+                "pygments_style": "sas",
+                # "linenums_style": "inline",
+                "line_spans": "__codeline",
+                "line_anchors": "__codelineno",
+            },
+        },
     )
     return render(request, "problem.html", {"title": title, "problem": html})
 

@@ -2,12 +2,18 @@
 
 https://facelessuser.github.io/pymdown-extensions/extensions/superfences/
 
-```{.python #id linenums="1" title="Example code block"}
+```{.python #id linenums="1" title="Example code block" pygments_style="monokai"}
 def hello(name="world"):
     print(f"Hello, {name}")
 name = input("Name: ")
 hello(name)
 ```
+
+    #!py3 "monokai"
+    def hello(name="world"):
+        print(f"Hello, {name}")
+    name = input("Name: ")
+    hello(name)
 
 ## LaTeX
 
