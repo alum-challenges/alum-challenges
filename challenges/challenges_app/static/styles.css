@@ -1,44 +1,44 @@
 code {
-  display: block;
-  background: none;
-  white-space: pre;
-  -webkit-overflow-scrolling: touch;
-  overflow-x: auto;
-  max-width: 100%;
-  min-width: 100px;
-  padding: 0;
+    display: block;
+    background: none;
+    white-space: pre;
+    -webkit-overflow-scrolling: touch;
+    overflow-x: auto;
+    max-width: 100%;
+    min-width: 100px;
+    padding: 0;
 }
 
 .linenos {
-  padding-right: 0 !important;
-  font-size: 0.8888889em !important;
-  width: 1%;
+    padding-right: 0 !important;
+    font-size: 0.8888889em !important;
+    width: 1%;
 }
 
 /* .linenos .linenodiv { */
 /* } */
 
 .linenos pre {
-  width: auto !important;
-  min-width: auto !important;
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-  border: 2px solid transparent;
-  border-bottom: 1px solid transparent;
+    width: auto !important;
+    min-width: auto !important;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border: 2px solid transparent;
+    border-bottom: 1px solid transparent;
 }
 
 .highlighttable td:not(:last-of-type) pre {
-  /* padding-right: 0; */
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
+    /* padding-right: 0; */
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
 }
 
 .highlighttable td:not(:first-of-type) {
-  padding-left: 0;
+    padding-left: 0;
 }
 
 .highlighttable td:not(:first-of-type) pre {
-  padding-left: 0;
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
+    padding-left: 0;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
 }

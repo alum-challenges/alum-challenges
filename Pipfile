@@ -14,6 +14,7 @@ pymdown-extensions = "*"
 pygments = "*"
 django-tailwind = "*"
 django-browser-reload = "*"
+npm = "*"
 
 [dev-packages]
 
