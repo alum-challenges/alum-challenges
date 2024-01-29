@@ -1,4 +1,4 @@
-{% load static tailwind_tags %}
+{% load static %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -7,8 +7,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="{% static 'styles.css' %}" rel="stylesheet">
         <link href="{% static 'pygment.css' %}" rel="stylesheet">
+        <link href="{% static 'tailwind.css' %}" rel="stylesheet">
         <title>{%block title %}{% endblock %}</title>
-        {% tailwind_css %}
         {% block head %}{% endblock %}
     </head>
     <body class="dark:bg-black">
