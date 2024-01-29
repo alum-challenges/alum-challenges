@@ -11,6 +11,8 @@ code {
 
 .highlight {
     /* font-size: 85% !important; */
+    margin: 1em 0;
+    overflow-x: auto;
 }
 
 .linenos {
@@ -37,6 +39,16 @@ code {
 
 .highlight code {
     font-size: inherit !important;
+}
+
+.highlight td {
+    /* padding-top: 0; */
+    padding-bottom: 0;
+}
+
+.highlight pre, .highlighttable {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
 }
 
 .highlighttable td:not(:last-of-type) pre {

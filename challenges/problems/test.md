@@ -1,12 +1,19 @@
 # Test problem
 
 https://facelessuser.github.io/pymdown-extensions/extensions/superfences/
-
 ```{.python #id linenums="1" title="Example code block" pygments_style="monokai"}
 def hello(name="world"):
     print(f"Hello, {name}")
 name = input("Name: ")
 hello(name)
+```
+```{.c #id linenums="1"}
+#include <stdio.h>
+int main() {
+    // printf() displays the string inside quotation marks Lorem ipsum
+    printf("Hello, World!");
+    return 0;
+}
 ```
 
 ## LaTeX
