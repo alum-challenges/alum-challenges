@@ -29,6 +29,10 @@ code {
     border-bottom-right-radius: 0;
     /* border: 2px solid transparent; */
     /* border-bottom: 1px solid transparent; */
+    padding-left: .5em;
+    padding-right: .5em;
+    opacity: .95;
+    text-align: right;
 }
 
 .highlight code {
@@ -46,7 +50,7 @@ code {
 }
 
 .highlighttable td:not(:first-of-type) pre {
-    padding-left: 0;
+    padding-left: 1em;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
 }
