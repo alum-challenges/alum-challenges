@@ -90,7 +90,7 @@ def problem_view(request, title):
         ],
         extension_configs={
             "pymdownx.highlight": {
-                "pygments_style": "sas",
+                # "pygments_style": "sas",
                 # "linenums_style": "inline",
                 "line_spans": "__codeline",
                 "line_anchors": "__codelineno",

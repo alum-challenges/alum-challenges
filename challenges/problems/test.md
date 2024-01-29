@@ -26,8 +26,13 @@ v_i - \sum_j c_j h_j \end{align}
 
 ## Blocks
 
-/// details | Did you know? open: True
+## Blocks
+/// details | Did you know?
+    open: True
 
-You can create a note with Blocks! /// /// details | Hidden note!
+You can create a note with Blocks!
+///
+/// details | Hidden note!
 
-Secret hint inside ///
+Secret hint inside
+///
