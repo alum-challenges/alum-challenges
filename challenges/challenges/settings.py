@@ -84,7 +84,8 @@ DATABASES = {
         "NAME": BASE_DIR / "db.sqlite3",
     }
 }
-AUTH_USER_MODEL = "challenges_app.User"
+
+AUTH_USER_MODEL = "auth.User"
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -103,8 +104,6 @@ AUTH_PASSWORD_VALIDATORS = [
         "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
-
-AUTH_USER_MODEL = "challenges_app.User"
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/

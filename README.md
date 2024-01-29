@@ -28,3 +28,10 @@ pipenv run server
 pipenv run makemigrations
 pipenv run migrate
 ```
+
+## Usage of check50:
+
+```shell
+# execute this command to check your problem where <problem> stands for its name
+check50 typicallythomas/AlumChallenges/main/problem_tests/<problem>
+```
