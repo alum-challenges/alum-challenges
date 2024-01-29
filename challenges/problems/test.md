@@ -9,12 +9,6 @@ name = input("Name: ")
 hello(name)
 ```
 
-    #!py3 "monokai"
-    def hello(name="world"):
-        print(f"Hello, {name}")
-    name = input("Name: ")
-    hello(name)
-
 ## LaTeX
 
 https://facelessuser.github.io/pymdown-extensions/extensions/arithmatex/
@@ -23,8 +17,6 @@ v_i - \sum_j c_j h_j \end{align}
 
 \begin{align} p(v_i=1|\mathbf{h}) & = \sigma\left(\sum_j w_{ij}h_j + b_i\right)
 \\ p(h_j=1|\mathbf{v}) & = \sigma\left(\sum_i w_{ij}v_i + c_j\right) \end{align}
-
-## Blocks
 
 ## Blocks
 /// details | Did you know?
