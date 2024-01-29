@@ -9,9 +9,13 @@ code {
     padding: 0;
 }
 
+.highlight {
+    font-size: 85% !important;
+}
+
 .linenos {
     padding-right: 0 !important;
-    font-size: 0.8888889em !important;
+    /* font-size: 0.8888889em !important; */
     width: 1%;
 }
 
@@ -23,8 +27,12 @@ code {
     min-width: auto !important;
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
-    border: 2px solid transparent;
-    border-bottom: 1px solid transparent;
+    /* border: 2px solid transparent; */
+    /* border-bottom: 1px solid transparent; */
+}
+
+.highlight code {
+    font-size: inherit !important;
 }
 
 .highlighttable td:not(:last-of-type) pre {
