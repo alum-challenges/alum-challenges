@@ -1,9 +1,10 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 import markdown
-from .models import User
 from . import util
+from django.db.utils import IntegrityError
 
 
 def index(request):
@@ -38,11 +39,11 @@ def logout_view(request):
 
 def signup_view(request):
     if request.method == "POST":
-        nickname = request.POST["nickname"]
+        username = request.POST["username"]
         password = request.POST["password"]
         confirm = request.POST["confirm"]
 
-        if len(nickname) < 3:
+        if len(username) < 3:
             return render(
                 request,
                 "accounts/signup.html",
@@ -62,7 +63,7 @@ def signup_view(request):
             )
         # Attempt to create new user
         try:
-            user = User.objects.create_user(username, password)
+            user = User.objects.create_user(username=username, password=password)
             user.save()
         except IntegrityError:
             return render(
@@ -82,11 +83,20 @@ def problem_view(request, title):
     html = markdown.markdown(
         md,
         extensions=[
+            "pymdownx.highlight",
             "pymdownx.superfences",
             "pymdownx.arithmatex",
             "pymdownx.magiclink",
             "pymdownx.blocks.details",
         ],
+        extension_configs={
+            "pymdownx.highlight": {
+                # "pygments_style": "sas",
+                # "linenums_style": "inline",
+                "line_spans": "__codeline",
+                "line_anchors": "__codelineno",
+            },
+        },
     )
     return render(request, "problem.html", {"title": title, "problem": html})
 

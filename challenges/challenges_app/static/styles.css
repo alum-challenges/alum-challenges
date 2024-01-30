@@ -3,8 +3,66 @@ code {
     background: none;
     white-space: pre;
     -webkit-overflow-scrolling: touch;
-    overflow-x: scroll;
+    overflow-x: auto;
     max-width: 100%;
     min-width: 100px;
     padding: 0;
+}
+
+.highlight {
+    /* font-size: 85% !important; */
+    margin: 1em 0;
+    overflow-x: auto;
+}
+
+.linenos {
+    padding-right: 0 !important;
+    /* font-size: 0.8888889em !important; */
+    width: 1%;
+}
+
+/* .linenos .linenodiv { */
+/* } */
+
+.linenos pre {
+    width: auto !important;
+    min-width: auto !important;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    /* border: 2px solid transparent; */
+    /* border-bottom: 1px solid transparent; */
+    padding-left: .5em;
+    padding-right: .5em;
+    opacity: .95;
+    text-align: right;
+}
+
+.highlight code {
+    font-size: inherit !important;
+}
+
+.highlight td {
+    /* padding-top: 0; */
+    padding-bottom: 0;
+}
+
+.highlight pre, .highlighttable {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+}
+
+.highlighttable td:not(:last-of-type) pre {
+    /* padding-right: 0; */
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.highlighttable td:not(:first-of-type) {
+    padding-left: 0;
+}
+
+.highlighttable td:not(:first-of-type) pre {
+    padding-left: 1em;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
 }

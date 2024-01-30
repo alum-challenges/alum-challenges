@@ -12,6 +12,7 @@ tzdata = "==2023.4"
 markdown = "*"
 pymdown-extensions = "*"
 pygments = "*"
+django-browser-reload = "*"
 
 [dev-packages]
 
