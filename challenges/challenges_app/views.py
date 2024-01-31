@@ -8,7 +8,6 @@ from django.db.utils import IntegrityError
 
 
 def index(request):
-    print(util.list_entries())
     return render(request, "index.html", {"problems": util.list_entries()})
 
 
