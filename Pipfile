@@ -13,6 +13,7 @@ markdown = "*"
 pymdown-extensions = "*"
 pygments = "*"
 django-browser-reload = "*"
+requests = "*"
 
 [dev-packages]
 

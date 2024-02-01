@@ -10,7 +10,7 @@ def list_entries():
     """
     Returns a list of all markdown files, without the extension name
     """
-    return Challenges.objects.values_list('title', flat=True)   
+    return Challenges.objects.values_list("title", flat=True)
 
 
 def get_entry(title):
@@ -21,6 +21,17 @@ def get_entry(title):
     try:
         problem = Challenges.objects.get(title=title)
         return problem.description
+    except Challenges.DoesNotExist:
+        return None
+
+
+def get_challenge(title):
+    """
+    Retrieves a problem from database by its title. If no such
+    file exists, the function returns None.
+    """
+    try:
+        return Challenges.objects.get(title=title)
     except Challenges.DoesNotExist:
         return None
 

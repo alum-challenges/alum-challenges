@@ -2,10 +2,12 @@
 {% block title %}Index{% endblock %}
 
 {% block body %}
-<h1>This is a test</h1>
-<ul>
-    {% for problem in problems %}
-    <li><a href="{% url 'problems' problem %}">{{ problem }}</a></li>
-    {% endfor %}
-</ul>
+<article class="prose prose-slate prose-lg highlight content-center dark:prose-invert w-1/2 p-4 mx-auto">
+    <h1>This is a test</h1>
+    <ul>
+        {% for problem in problems %}
+        <li><a href="{% url 'problems' problem %}">{{ problem }}</a></li>
+        {% endfor %}
+    </ul>
+</article>
 {% endblock %}
