@@ -101,5 +101,5 @@ def problem_view(request, title):
 
 
 @login_required
-def account(request):
+def account_view(request):
     return render(request, "accounts/account.html")

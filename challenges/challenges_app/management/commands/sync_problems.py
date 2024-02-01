@@ -7,9 +7,13 @@ python challenges/manage.py sync_problems
 """
 from django.core.management.base import BaseCommand
 from challenges_app.models import Challenges
+from challenges_app import util
 from django.db.utils import IntegrityError
+from glob import glob
+import os
 import requests
 import re
+import subprocess
 
 """
 Configuration data
@@ -19,10 +23,10 @@ EXCEPTIONS = ["README.md", ".gitignore", "LICENSE", "tests"]
 OWNER = "alum-challenges"
 REPO_NAME = "problems"
 BRANCH_NAME = "python/2022"
-BASE_URL = "https://api.github.com/repos"
+BASE_URL = "git@github.com:alum-challenges/problems.git"
+
 
 class Command(BaseCommand):
-
     def handle(self, *args, **options):
         # Entry point for the management command
         self.sync_problems(OWNER, REPO_NAME, BRANCH_NAME)
@@ -35,33 +39,53 @@ class Command(BaseCommand):
         :param repo_name: GitHub repository name
         :param branch_name: Branch of the repository to sync
         """
-        def explore_directory(directory_url):
+
+        # Use git fetch instead of downloading files
+        cwd = os.getcwd()
+        if not cwd.endswith("/problems"):
+            prob_dir = glob(cwd + "/**/problems", recursive=True)[0]
+            subprocess.run(["git", "pull"], cwd=prob_dir)
+        else:
+            subprocess.run(["git", "pull"])
+
+        def explore_directory():
             """
             Recursively explore the directory structure of the GitHub repository.
 
             :param directory_url: URL of the directory to explore
             """
-            files = requests.get(directory_url).json()
 
+            # Get all md files
+            files = glob("problems/**/*.md", recursive=True)
             for file in files:
-                if file["name"] not in EXCEPTIONS:
-                    if file["type"] == "dir":
-                        # Recursively explore subdirectories
-                        explore_directory(file["url"])
-                    elif file["name"].endswith(".md"):
-                        # Process Markdown files
-                        problem_url = file["download_url"]
-                        response = requests.get(problem_url)
+                title = file.split("/")[-1].rstrip(".md")
 
-                        if response.status_code == 200:
-                            # Save the Markdown content as a Challenge in the database
-                            problem = response.text
-                            try:
-                                Challenges(title=file["name"].replace(".md", ""), description=problem).save()
-                            except IntegrityError:
-                                # Handle IntegrityError (e.g., duplicate entry) by ignoring it
-                                pass
+                # Ignore README
+                if title == "README":
+                    continue
+
+                with open(file) as f:
+                    problem = f.read()
+
+                    # Process file for our markdown
+                    ## LaTeX
+                    problem = problem.replace("$`", "").replace("`$", "")
+                    ## Codeblocks
+                    problem = re.sub(
+                        r"```([^\r\n]+)", r"""```{.\1 linenums="1"}""", problem
+                    )
+
+                    challenge = util.get_challenge(title=title)
+
+                    if not challenge:
+                        try:
+                            Challenges(title=title, description=problem).save()
+                        except IntegrityError:
+                            # Handle IntegrityError (e.g., duplicate entry) by ignoring it
+                            pass
+                    else:  # Update contents
+                        challenge.description = problem
+                        challenge.save(update_fields=["description"])
 
         # Start exploring the directory structure from the root of the specified branch
-        branch_url = f"{BASE_URL}/{owner}/{repo_name}/contents?ref={branch_name}"
-        explore_directory(branch_url)
+        explore_directory()
