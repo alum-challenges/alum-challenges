@@ -19,19 +19,18 @@ import subprocess
 Configuration data
 """
 # Files which should not be imported into the database:
-EXCEPTIONS = ["README.md", ".gitignore", "LICENSE", "tests"]
 OWNER = "alum-challenges"
 REPO_NAME = "problems"
-BRANCH_NAME = "python/2022"
+BRANCH_NAME = "main"
 BASE_URL = "git@github.com:alum-challenges/problems.git"
 
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
         # Entry point for the management command
-        self.sync_problems(OWNER, REPO_NAME, BRANCH_NAME)
+        self.sync_problems()
 
-    def sync_problems(self, owner, repo_name, branch_name):
+    def sync_problems(self):
         """
         Synchronize problems from a GitHub repository.
 
