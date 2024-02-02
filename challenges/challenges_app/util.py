@@ -4,13 +4,26 @@ import re
 from challenges_app.models import Challenges
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
+import frontmatter
 
 
 def list_entries():
     """
     Returns a list of all markdown files, without the extension name
     """
-    return Challenges.objects.values_list("title", flat=True)
+    entries = list(Challenges.objects.order_by("course", "week"))
+
+    # entries = list(map(add_metadata, entries))
+    return entries
+
+
+def add_metadata(challenge):
+    """
+    Adds metadata from the frontmatter to a Challenge object
+    """
+    challenge.meta = frontmatter.loads(challenge.description).__dict__
+    print(challenge.__dict__)
+    return challenge
 
 
 def get_entry(title):
@@ -20,7 +33,8 @@ def get_entry(title):
     """
     try:
         problem = Challenges.objects.get(title=title)
-        return problem.description
+        problem = re.sub(r"^---\n[\s\S]+?\n---\n", "", problem.description)
+        return problem.strip()
     except Challenges.DoesNotExist:
         return None
 

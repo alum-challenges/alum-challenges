@@ -2,11 +2,34 @@
 {% block title %}Index{% endblock %}
 
 {% block body %}
-<article class="prose prose-slate prose-lg highlight content-center dark:prose-invert w-1/2 p-4 mx-auto">
-    <h1>This is a test</h1>
-    <ul>
+<article class="highlight content-center w-1/2 p-4 mx-auto">
+    <h1 class="text-slate-900 text-xl font-semibold mb-4 dark:text-slate-100">Problems</h1>
+    <ul class="text-slate-700 text-sm leading-6 not-prose">
         {% for problem in problems %}
-        <li><a href="{% url 'problems' problem %}">{{ problem }}</a></li>
+        <li>
+            <span class="block py-1 font-medium font-medium">{{ problem.course }}</span>
+        </li>
+        <li class="ml-4">
+            <span class="group flex items-start py-1"> 
+                <svg width="3" height="24" viewBox="0 -9 3 24"
+                    class="mr-2 text-slate-400 overflow-visible group-hover:text-slate-600 dark:text-slate-600 dark:group-hover:text-slate-500">
+                    <path d="M0 0L3 3L0 6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+                    </path>
+                </svg>Week {{ problem.week }}
+            </span>
+            <ul class="block">
+                <li class="ml-4">
+                    <a href="{% url 'problems' problem.title %}" class="group flex items-start py-1 text-sky-500 dark:text-sky-400">
+                        <svg width="3" height="24" viewBox="0 -9 3 24"
+                            class="mr-2 text-slate-400 overflow-visible group-hover:text-slate-600 dark:text-slate-600 dark:group-hover:text-slate-500">
+                            <path d="M0 0L3 3L0 6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+                            </path>
+                        </svg>{{ problem.full_title }}
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li><kbd>{{ problem.course }}</kbd> / <kbd>Week {{ problem.week }}</kbd> / <a href="{% url 'problems' problem.title %}" class="group py-1 text-sky-500 dark:text-sky-400"><kbd>{{ problem.full_title}}</kbd></a></li>
         {% endfor %}
     </ul>
 </article>

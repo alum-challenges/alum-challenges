@@ -14,6 +14,7 @@ pymdown-extensions = "*"
 pygments = "*"
 django-browser-reload = "*"
 requests = "*"
+python-frontmatter = "*"
 
 [dev-packages]
 

@@ -79,6 +79,7 @@ def problem_view(request, title):
     md = util.get_entry(title)
     if md == None:
         pass
+
     html = markdown.markdown(
         md,
         extensions=[
@@ -97,7 +98,13 @@ def problem_view(request, title):
             },
         },
     )
-    return render(request, "problem.html", {"title": title, "problem": html})
+    # meta = frontmatter(md)
+
+    return render(
+        request,
+        "problem.html",
+        {"title": util.get_challenge(title=title).full_title, "problem": html},
+    )
 
 
 @login_required
