@@ -22,7 +22,6 @@ def add_metadata(challenge):
     Adds metadata from the frontmatter to a Challenge object
     """
     challenge.meta = frontmatter.loads(challenge.description).__dict__
-    print(challenge.__dict__)
     return challenge
 
 

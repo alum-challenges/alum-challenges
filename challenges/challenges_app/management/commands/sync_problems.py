@@ -92,8 +92,6 @@ class Command(BaseCommand):
                         "description": problem,
                     }
 
-                    print(data)
-
                     if not challenge:
                         try:
                             Challenges(**data).save()
@@ -101,7 +99,6 @@ class Command(BaseCommand):
                             # Handle IntegrityError (e.g., duplicate entry) by ignoring it
                             pass
                     else:  # Update contents
-                        print(meta.get("topics", None))
                         challenge.full_title = meta.get("title", None)
                         challenge.author = meta.get("author", None)
                         challenge.course = meta.get("course", None)
