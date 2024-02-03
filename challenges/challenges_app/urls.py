@@ -11,5 +11,5 @@ urlpatterns = [
     path("problems/<str:title>", views.problem_view, name="problems"),
     path("search/", views.search, name="search-problems"),
     path("submit/new-problem", views.add_problem, name="add-problem"),
-    path("about/", views.about_page, name="about")
+    path("about/", views.about_page, name="about"),
 ]
