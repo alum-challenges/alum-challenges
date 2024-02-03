@@ -5,11 +5,17 @@ class Challenges(models.Model):
     title = models.CharField(max_length=100, unique=True)
     full_title = models.CharField(max_length=100, null=True)
     description = models.TextField()
-    course = models.CharField(max_length=100, null=True, default="CS50x")
     week = models.IntegerField(default=0)
     author = models.CharField(max_length=100, default="")
     topics = models.JSONField(null=True)
 
+
+class Courses(models.Model):
+    name = models.CharField(max_length=100, null=True, default="CS50x")
+    problems = models.ManyToManyField(Challenges, related_name="courses", null=True)
+
+    def __str__(self):
+        return self.name
 
 # completed = models.ManyToManyField(
 #     "Challenges", related_name="completed", blank=True
