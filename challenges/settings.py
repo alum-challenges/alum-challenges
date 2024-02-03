@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "challenges_app",
     "django_browser_reload",
+    "cookiebanner",
 ]
 
 MIDDLEWARE = [
