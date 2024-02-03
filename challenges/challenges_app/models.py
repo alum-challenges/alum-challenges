@@ -6,12 +6,12 @@ class Challenges(models.Model):
     full_title = models.CharField(max_length=100, null=True)
     description = models.TextField()
     week = models.IntegerField(default=0)
-    author = models.CharField(max_length=100, default="")
+    author = models.CharField(max_length=100, default="")  # Typically Thomas: Not sure we should track this data as it's PII
     topics = models.JSONField(null=True)
 
 
 class Courses(models.Model):
-    name = models.CharField(max_length=100, null=True, default="CS50x")
+    name = models.CharField(max_length=16, null=True, default="CS50x")
     problems = models.ManyToManyField(Challenges, related_name="courses", null=True)
 
     def __str__(self):
