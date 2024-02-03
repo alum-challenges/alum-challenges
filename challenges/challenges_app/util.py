@@ -11,7 +11,7 @@ def list_entries():
     """
     Returns a list of all markdown files, without the extension name
     """
-    entries = list(Challenges.objects.order_by("course", "week"))
+    entries = list(Challenges.objects.order_by("courses", "week"))
 
     # entries = list(map(add_metadata, entries))
     return entries
