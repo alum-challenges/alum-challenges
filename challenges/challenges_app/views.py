@@ -110,3 +110,16 @@ def problem_view(request, title):
 @login_required
 def account_view(request):
     return render(request, "accounts/account.html")
+
+
+@login_required
+def add_problem(request):
+    return render(request, "submission.html")
+
+
+def search(request):
+    return render(request, "search.html")
+
+
+def about_page(request):
+    return render(request, "about.html")
