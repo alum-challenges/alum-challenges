@@ -9,6 +9,7 @@ from django.core.management.base import BaseCommand
 from challenges_app.models import Challenges
 from challenges_app import util
 from django.db.utils import IntegrityError
+import frontmatter
 from glob import glob
 import os
 import requests
@@ -47,6 +48,9 @@ class Command(BaseCommand):
         else:
             subprocess.run(["git", "pull"])
 
+            # Change directory to parent of problems
+            os.chdir("..")
+
         def explore_directory():
             """
             Recursively explore the directory structure of the GitHub repository.
@@ -55,6 +59,7 @@ class Command(BaseCommand):
             """
 
             # Get all md files
+
             files = glob("problems/**/*.md", recursive=True)
             for file in files:
                 title = file.split("/")[-1].rstrip(".md")
@@ -65,6 +70,7 @@ class Command(BaseCommand):
 
                 with open(file) as f:
                     problem = f.read()
+                    meta = frontmatter.loads(problem).metadata
 
                     # Process file for our markdown
                     ## LaTeX
@@ -76,15 +82,30 @@ class Command(BaseCommand):
 
                     challenge = util.get_challenge(title=title)
 
+                    data = {
+                        "title": title,
+                        "full_title": meta.get("title", None),
+                        "author": meta.get("author", None),
+                        "course": meta.get("course", None),
+                        "week": meta.get("week", None),
+                        "topics": meta.get("topics", None),
+                        "description": problem,
+                    }
+
                     if not challenge:
                         try:
-                            Challenges(title=title, description=problem).save()
+                            Challenges(**data).save()
                         except IntegrityError:
                             # Handle IntegrityError (e.g., duplicate entry) by ignoring it
                             pass
                     else:  # Update contents
+                        challenge.full_title = meta.get("title", None)
+                        challenge.author = meta.get("author", None)
+                        challenge.course = meta.get("course", None)
+                        challenge.week = meta.get("week", None)
+                        challenge.topics = meta.get("topics", None)
                         challenge.description = problem
-                        challenge.save(update_fields=["description"])
+                        challenge.save(update_fields=data.keys())
 
         # Start exploring the directory structure from the root of the specified branch
         explore_directory()
