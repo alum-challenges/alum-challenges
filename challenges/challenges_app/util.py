@@ -22,9 +22,9 @@ def paginate(request, qs, limit=2):
     Return
     """
     paginated_qs = Paginator(qs, limit)
-    print(paginated_qs.num_pages)
+    print(f"Num_pages: {paginated_qs.num_pages}")
     page_no = request.GET.get("page")
-    print(page_no)
+    print(f"Page_no: {page_no}")
     return paginated_qs.get_page(page_no)
 
 
