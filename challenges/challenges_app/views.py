@@ -2,13 +2,32 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
+from django.views.generic.list import ListView
 import markdown
 from . import util
+from challenges_app.models import Challenges
+
 from django.db.utils import IntegrityError
 
 
+class ChallengesListView(ListView):
+    model = Challenges
+    paginate_by = 2
+
+
 def index(request):
-    return render(request, "index.html", {"problems": util.list_entries()})
+    challenges = util.paginate(request, Challenges.objects.all().order_by("-id"), 2)
+    if util.is_htmx(request):
+        return render(
+            request,
+            "index.html",
+            {"problems": util.list_entries(), "challenges": challenges},
+        )
+    return render(
+        request,
+        "index.html",
+        {"problems": util.list_entries(), "challenges": challenges},
+    )
 
 
 def login_view(request):
@@ -78,7 +97,11 @@ def signup_view(request):
 def problem_view(request, title):
     md = util.get_entry(title)
     if md == None:
-        pass
+        return render(
+            request,
+            "error.html",
+            {"title": title, "message": "This page does not exist"},
+        )
 
     html = markdown.markdown(
         md,

@@ -1,0 +1,8 @@
+
+{% for problem in problems %}
+<li>
+  <kbd>{{ problem.course }}</kbd> / <kbd>Week {{ problem.week }}</kbd> /
+  <a href="{% url 'problems' problem.title %}" class="group py-1 text-sky-500 dark:text-sky-400"><kbd>{{ problem.full_title}}</kbd></a
+  >
+</li>
+{% endfor %} {% include "islands/pagination.html" with page=problems %}
