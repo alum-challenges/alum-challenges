@@ -15,7 +15,7 @@ pygments = "*"
 django-browser-reload = "*"
 requests = "*"
 python-frontmatter = "*"
-django-cookiebanner= "*"
+django-cookiebanner = "*"
 
 [dev-packages]
 
