@@ -42,21 +42,22 @@ class Command(BaseCommand):
 
         # Use git fetch instead of downloading files
         cwd = os.getcwd()
-        prob_dir = glob(cwd + "/**/challenges", recursive=True)[0]
+        prob_dir = glob(cwd + "/**/challenges", recursive=True)
         if cwd.endswith("alum-challenges/challenges"):
             subprocess.run(
                 f'git clone "{BASE_URL}" "{REPO_NAME}" 2> /dev/null || git -C "{REPO_NAME}" pull',
                 shell=True,
             )
         else:
-            subprocess.run(
-                f'git clone "{BASE_URL}" "{REPO_NAME}" 2> /dev/null || git -C "{REPO_NAME}" pull',
-                shell=True,
-                cwd=prob_dir,
-            )
+            if prob_dir:
+                subprocess.run(
+                    f'git clone "{BASE_URL}" "{REPO_NAME}" 2> /dev/null || git -C "{REPO_NAME}" pull',
+                    shell=True,
+                    cwd=prob_dir[0],
+                )
 
-            # Change directory to parent of problems
-            os.chdir(prob_dir)
+                # Change directory to parent of problems
+                os.chdir(prob_dir[0])
 
         def explore_directory():
             """
@@ -74,7 +75,7 @@ class Command(BaseCommand):
                 # Ignore README
                 if title == "README":
                     continue
-
+                
                 with open(file) as f:
                     problem = f.read()
                     meta = frontmatter.loads(problem).metadata
