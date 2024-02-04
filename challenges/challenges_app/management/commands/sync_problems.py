@@ -43,8 +43,10 @@ class Command(BaseCommand):
         # Use git fetch instead of downloading files
         cwd = os.getcwd()
         if not cwd.endswith("/problems"):
-            prob_dir = glob(cwd + "/**/problems", recursive=True)[0]
-            subprocess.run(["git", "pull"], cwd=prob_dir)
+            prob_dir = glob(cwd + "/**/problems", recursive=True)
+            # Handle empty glob output
+            if prob_dir:
+                subprocess.run(["git", "pull"], cwd=prob_dir[0])
         else:
             subprocess.run(["git", "pull"])
 
