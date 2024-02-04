@@ -5,6 +5,7 @@ terminal using the following command:
 
 python challenges/manage.py sync_problems
 """
+
 from django.core.management.base import BaseCommand
 from challenges_app.models import Challenges
 from challenges_app import util
@@ -12,7 +13,6 @@ from django.db.utils import IntegrityError
 import frontmatter
 from glob import glob
 import os
-import requests
 import re
 import subprocess
 
@@ -42,14 +42,21 @@ class Command(BaseCommand):
 
         # Use git fetch instead of downloading files
         cwd = os.getcwd()
-        if not cwd.endswith("/problems"):
-            prob_dir = glob(cwd + "/**/problems", recursive=True)[0]
-            subprocess.run(["git", "pull"], cwd=prob_dir)
+        prob_dir = glob(cwd + "/**/challenges", recursive=True)[0]
+        if cwd.endswith("alum-challenges/challenges"):
+            subprocess.run(
+                f'git clone "{BASE_URL}" "{REPO_NAME}" 2> /dev/null || git -C "{REPO_NAME}" pull',
+                shell=True,
+            )
         else:
-            subprocess.run(["git", "pull"])
+            subprocess.run(
+                f'git clone "{BASE_URL}" "{REPO_NAME}" 2> /dev/null || git -C "{REPO_NAME}" pull',
+                shell=True,
+                cwd=prob_dir,
+            )
 
             # Change directory to parent of problems
-            os.chdir("..")
+            os.chdir(prob_dir)
 
         def explore_directory():
             """
