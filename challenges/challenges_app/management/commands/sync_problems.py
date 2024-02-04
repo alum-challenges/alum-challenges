@@ -13,7 +13,6 @@ from django.db.utils import IntegrityError
 import frontmatter
 from glob import glob
 import os
-import requests
 import re
 import subprocess
 
