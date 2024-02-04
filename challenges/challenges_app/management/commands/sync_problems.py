@@ -19,7 +19,7 @@ import subprocess
 """
 Configuration data
 """
-# Files which should not be imported into the database:
+# Configuring paths:
 OWNER = "alum-challenges"
 REPO_NAME = "problems"
 BRANCH_NAME = "main"
