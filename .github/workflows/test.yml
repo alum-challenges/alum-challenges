@@ -9,5 +9,4 @@ jobs:
       - name: Run Django unit test
         run: |
           pip install -r requirements.txt
-          cd challenges
-          python manage.py test  ..\tests
+          python challenges/manage.py test  
