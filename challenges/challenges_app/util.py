@@ -1,10 +1,34 @@
-# Source: https://cs50.harvard.edu/web/2020/projects/1/wiki/
 import re
 
 from challenges_app.models import Challenges
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
 import frontmatter
+
+# Pagination
+from django.core.paginator import Paginator
+
+
+def is_htmx(request):
+    """
+    Check if request comes from htmx
+    """
+    hx_boost = request.headers.get("Hx-Boosted")
+    hx_request = request.headers.get("Hx-Request")
+    if not hx_boost:
+        return False
+    elif hx_boost and hx_request:
+        return True
+
+
+def paginate(request, qs, limit=2):
+    """
+    Paginate QuerySet(qs), limit = amount of items per page
+    Return current page
+    """
+    paginated_qs = Paginator(qs, limit)
+    page_no = int(request.GET.get("page", 1))
+    return paginated_qs.get_page(page_no)
 
 
 def list_entries():
