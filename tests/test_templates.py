@@ -1,12 +1,13 @@
 from django.test import TestCase, Client
 from challenges_app.models import Challenges
 
+
 class YourTestClass(TestCase):
 
     def setUp(self):
         # Create sample challenges for testing
         Challenges.objects.create(
-            title="Python Basics",
+            title="Python_Basics",
             full_title="Introduction to Python Programming",
             description="""---
 title: Python Basics
@@ -24,7 +25,7 @@ https://facelessuser.github.io/pymdown-extensions/extensions/arithmatex/""",
         )
 
         Challenges.objects.create(
-            title="Data Analysis",
+            title="Data_Analysis",
             full_title="Analyzing Data with Python",
             description="""---
 title: Data Analysis
@@ -41,7 +42,7 @@ Pandas, Matplotlib, and data visualization techniques.""",
         )
 
         Challenges.objects.create(
-            title="Machine Learning",
+            title="Machine_Learning",
             full_title="Introduction to Machine Learning",
             description="""---
 title: Machine Learning
@@ -70,13 +71,14 @@ learn about supervised learning, unsupervised learning, and model evaluation.
         # Test the index page
         client = Client()
         response = client.get("/")
+        print(f"{response.context}")
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(response.context["problems"]), 3)
+        self.assertEqual(len(response.context["challenges"]), 3)
 
     def test_problem_view1(self):
         # Test the Machine Learning challenge page
         client = Client()
-        response = client.get("/problems/Machine Learning")
+        response = client.get("/problems/Machine_Learning")
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Did you know?")
         self.assertContains(response, "Hidden note")
@@ -84,7 +86,7 @@ learn about supervised learning, unsupervised learning, and model evaluation.
     def test_problem_view2(self):
         # Test the Data Analysis challenge page
         client = Client()
-        response = client.get("/problems/Data Analysis")
+        response = client.get("/problems/Data_Analysis")
         self.assertEqual(response.status_code, 200)
         expected_text = "Explore the world of data analysis using Python. This challenge covers\nPandas, Matplotlib, and data visualization techniques."
         response_content = response.content.decode("utf-8")
@@ -99,7 +101,7 @@ learn about supervised learning, unsupervised learning, and model evaluation.
     def test_problem_view4(self):
         # Test the Python Basics challenge page with LaTeX link
         client = Client()
-        response = client.get("/problems/Python Basics")
+        response = client.get("/problems/Python_Basics")
         self.assertEqual(response.status_code, 200)
         expected_latex_link = '<p><a href="https://facelessuser.github.io/pymdown-extensions/extensions/arithmatex/">https://facelessuser.github.io/pymdown-extensions/extensions/arithmatex/</a></p>'
         self.assertContains(response, expected_latex_link)
