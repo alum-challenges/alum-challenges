@@ -1,161 +1,117 @@
 {% load i18n %}
 
-<section id="cookiebanner" class="cookiebanner fixed max-w-md p-4 mx-auto bg-white border border-gray-200 dark:bg-gray-800 left-12 bottom-16 dark:border-gray-700 rounded-2xl">
-  <h2 class="font-semibold text-gray-800 dark:text-white">{{ cb_settings.title }}</h2>
-  {% if cb_settings.header_text %}
-  <p class="mt-4 text-sm text-gray-600 dark:text-gray-300">{{ cb_settings.header_text|safe }}</p>
-  {% endif %}
-  
-  <p class="mt-3 text-sm text-gray-600 dark:text-gray-300">Closing this modal default settings will be saved.</p>
-  <form id="cookiebannerForm">
-    {% for cookiegroup in cb_settings.groups %}
-    <div class="flex items-center my-3 font-semibold text-sm text-gray-600 dark:text-gray-300"">
-      <label
-        for="{{ cookiegroup.id }}"
-        class="inline-block mr-2 relative h-5 w-10 cursor-pointer rounded-full bg-gray-300 transition [-webkit-tap-highlight-color:_transparent] has-[:checked]:bg-green-500"
-        id="cookiegroup_{{ cookiegroup.id }}"
-      >
-        <input type="checkbox" id="{{ cookiegroup.id }}"
-        {% if not cookiegroup.optional %} checked disabled {% endif %}
-        name="{{ cookiegroup.id }}"
-        class="peer sr-only" />
-        <span
-        class="absolute inset-y-0 start-0 m-1 h-3 w-3 rounded-full bg-white transition-all peer-checked:start-5"
-        ></span>
-      </label> {{ cookiegroup.name }}
+<section id="cookiebanner" class="cookiebanner hidden fixed max-w-md p-4 mx-auto bg-white border border-gray-200 dark:bg-gray-800 left-12 bottom-16 dark:border-gray-700 rounded-2xl">
+    <h2 class="font-semibold text-gray-800 dark:text-white">{{ cb_settings.title }}</h2>
+    {% if cb_settings.header_text %}
+    <p class="mt-4 text-sm text-gray-600 dark:text-gray-300">{{ cb_settings.header_text|safe }}</p>
+    {% endif %}
+    
+    <p class="mt-3 text-sm text-gray-600 dark:text-gray-300">Closing this modal default settings will be saved.</p>
+    <form id="cookiebannerForm">
+        {% for cookiegroup in cb_settings.groups %}
+        <div class="flex items-center my-3 font-semibold text-sm text-gray-600 dark:text-gray-300"">
+            <label
+                for="{{ cookiegroup.id }}"
+                class="inline-block mr-2 relative h-5 w-10 cursor-pointer rounded-full bg-gray-300 transition [-webkit-tap-highlight-color:_transparent] has-[:checked]:bg-green-500"
+                id="cookiegroup_{{ cookiegroup.id }}"
+            >
+                <input type="checkbox" id="{{ cookiegroup.id }}"
+                {% if not cookiegroup.optional %} checked disabled {% endif %}
+                name="{{ cookiegroup.id }}"
+                class="peer sr-only" />
+                <span
+                class="absolute inset-y-0 start-0 m-1 h-3 w-3 rounded-full bg-white transition-all peer-checked:start-5"
+                ></span>
+            </label> {{ cookiegroup.name }}
+        </div>
+        <p class="mt-3 text-sm text-gray-600 dark:text-gray-300">{{ cookiegroup.description }}</p>
+        <details class="mt-3 text-sm text-gray-600 dark:text-gray-300">
+            <summary class="cursor-pointer">
+                {% trans 'Show cookie details' %}
+            </summary>
+            <div class="flow-root rounded-lg border border-gray-100 py-3 shadow-sm">
+                <dl class="-my-3 divide-y divide-gray-100 text-sm">
+                    {% for cookie in cookiegroup.cookies %}
+                    <div class="grid grid-cols-1 gap-1 p-3 sm:grid-cols-3 sm:gap-4">
+                        <dt class="font-medium text-gray-900">{{ cookie.pattern }}</dt>
+                        <dd class="text-gray-700 sm:col-span-2">{{ cookie.description }}</dd>
+                    </div>
+                    {% endfor %}
+                </dl>
+            </div>
+        </details>
+        {% endfor %}
+    </form>
+    <div class="grid grid-cols-2 gap-4 mt-4 shrink-0">
+        <button class="submit-btn text-xs border text-gray-800 hover:bg-gray-100 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 font-medium rounded-lg px-4 py-2.5 duration-300 transition-colors focus:outline-none">
+            Close
+        </button>
+        <button class="submit-btn text-xs bg-gray-900 font-medium rounded-lg hover:bg-gray-700 text-white px-4 py-2.5 duration-300 transition-colors focus:outline-none">
+            Accept all
+        </button>
     </div>
-    <p class="mt-3 text-sm text-gray-600 dark:text-gray-300">{{ cookiegroup.description }}</p>
-    <details class="mt-3 text-sm text-gray-600 dark:text-gray-300">
-      <summary class="cursor-pointer">
-        {% trans 'Show cookie details' %}
-      </summary>
-      <div class="flow-root rounded-lg border border-gray-100 py-3 shadow-sm">
-        <dl class="-my-3 divide-y divide-gray-100 text-sm">
-          {% for cookie in cookiegroup.cookies %}
-          <div class="grid grid-cols-1 gap-1 p-3 sm:grid-cols-3 sm:gap-4">
-            <dt class="font-medium text-gray-900">{{ cookie.pattern }}</dt>
-            <dd class="text-gray-700 sm:col-span-2">{{ cookie.description }}</dd>
-          </div>
-          {% endfor %}
-        </dl>
-      </div>
-    </details>
-    {% endfor %}
-  </form>
-  <div class="grid grid-cols-2 gap-4 mt-4 shrink-0">
-
-    <button class="submit-btn text-xs border text-gray-800 hover:bg-gray-100 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 font-medium rounded-lg px-4 py-2.5 duration-300 transition-colors focus:outline-none">
-      Close
-    </button>
-    <button class=" text-xs bg-gray-900 font-medium rounded-lg hover:bg-gray-700 text-white px-4 py-2.5 duration-300 transition-colors focus:outline-none">
-      Accept all
-    </button>
-  </div>
 </section>
 
-<div
-  class="hidden cookiebanner"
-  tabindex="-1"
-  role="dialog"
-  aria-labelledby="cookiebannerModalLabel"
-  aria-hidden="true"
->
-  <div id="cookiebannerModalDialog">
-    <div id="cookiebannerModalHeader">
-      <h3 id="cookiebannerModalTitle">{{ cb_settings.title }}</h3>
-      {% if cb_settings.header_text %}
-      <p>{{ cb_settings.header_text|safe }}</p>
-      {% endif %}
-    </div>
-    <div id="cookiebannerModalBody">
-    </div>
-    <div id="cookiebannerModalFooter">
-      {% if cb_settings.footer_text %}
-      <p class="text-left">{{ cb_settings.footer_text|safe }}</p>
-      {% endif %}
-      <input
-        type="submit"
-        name="enable_all"
-        class="cookiebannerSubmit btn"
-        value="{% trans 'Accept all' %}"
-      />
-      <input
-        type="submit"
-        name="save"
-        class="cookiebannerSubmit btn"
-        value="{% trans 'Save' %}"
-      />
-      <nav id="cookiebannerModalFooterLinks">
-        {% for link in cb_settings.footer_links %}
-        <span class="nav-item"
-          ><a class="nav-link" href="{{ link.href }}">{{ link.title }}</a></span
-        >
-        {% endfor %}
-      </nav>
-    </div>
-  </div>
-</div>
-
 <script type="text/javascript">
-  (() => {
-    const cookiegroups = JSON.parse("{{ cookiegroups_json|escapejs }}");
+    (() => {
+        const cookiegroups = JSON.parse("{{ cookiegroups_json|escapejs }}");
 
-    const _keyValue = document.cookie.match("(^|;) ?cookiebanner=([^;]*)(;|$)");
-    const cookiebannerCookie = _keyValue
-      ? decodeURIComponent(_keyValue[2])
-      : null;
-    const cookiebannerModal = document.getElementById("cookiebanner");
+        const _keyValue = document.cookie.match("(^|;) ?cookiebanner=([^;]*)(;|$)");
+        const cookiebannerCookie = _keyValue
+            ? decodeURIComponent(_keyValue[2])
+            : null;
+        const cookiebannerModal = document.getElementById("cookiebanner");
 
-    document.addEventListener("DOMContentLoaded", function () {
-      if (!cookiebannerCookie) cookiebannerModal.classList.remove("hidden");
-    });
-
-    new IntersectionObserver(([e]) => {
-      if (cookiebannerCookie) {
-        try {
-          cookiebannerCookie
-            .split(",")
-            .forEach(
-              (sec) =>
-                (document.querySelector(`input[name="${sec}"]`).checked = true),
-            );
-        } catch {
-          console.warn(
-            "having trouble parsing the cookiebannerCookie or settings the checkboxes",
-          );
-        }
-      }
-
-      document.querySelectorAll(".submit-btn").forEach((inp) => {
-        inp.addEventListener("click", () => {
-          let enable_cookies;
-          if (inp.name === "enable_all") {
-            enable_cookies = cookiegroups.map((x) => x.id);
-          } else {
-            let checked_cookiegroups = Array.from(
-              document.querySelector("#cookiebannerForm"),
-            )
-              .filter((x) => x.checked)
-              .map((x) => x.name);
-            enable_cookies = cookiegroups
-              .filter((x) => {
-                return checked_cookiegroups.includes(x.id) ? x : !x.optional;
-              })
-              .map((x) => x.id);
-          }
-          const max_age = 365 * 24 * 60 * 60;
-          const secure =
-            window.location.hostname === "localhost" ? "" : "secure";
-          document.cookie = `cookiebanner=${encodeURIComponent(enable_cookies)}; path=/; max-age=${max_age}; ${secure}`;
-          location.reload();
+        document.addEventListener("DOMContentLoaded", function () {
+            if (!cookiebannerCookie) cookiebannerModal.classList.remove("hidden");
         });
-      });
-    }).observe(cookiebannerModal);
-  })();
+
+        new IntersectionObserver(([e]) => {
+            if (cookiebannerCookie) {
+                try {
+                    cookiebannerCookie
+                        .split(",")
+                        .forEach(
+                            (sec) =>
+                                (document.querySelector(`input[name="${sec}"]`).checked = true),
+                        );
+                } catch {
+                    console.warn(
+                        "having trouble parsing the cookiebannerCookie or settings the checkboxes",
+                    );
+                }
+            }
+
+            document.querySelectorAll(".submit-btn").forEach((inp) => {
+                inp.addEventListener("click", () => {
+                    let enable_cookies;
+                    if (inp.name === "enable_all") {
+                        enable_cookies = cookiegroups.map((x) => x.id);
+                    } else {
+                        let checked_cookiegroups = Array.from(
+                            document.querySelector("#cookiebanner form"),
+                        )
+                            .filter((x) => x.checked)
+                            .map((x) => x.name);
+                        enable_cookies = cookiegroups
+                            .filter((x) => {
+                                return checked_cookiegroups.includes(x.id) ? x : !x.optional;
+                            })
+                            .map((x) => x.id);
+                    }
+                    const max_age = 365 * 24 * 60 * 60;
+                    const secure =
+                        window.location.hostname === "localhost" ? "" : "secure";
+                    document.cookie = `cookiebanner=${encodeURIComponent(enable_cookies)}; path=/; max-age=${max_age}; ${secure}`;
+                    cookiebannerModal.classList.add("hidden");
+                });
+            });
+        }).observe(cookiebannerModal);
+    })();
 </script>
 
 <style>
-  .cookiebanner {
-    z-index: 9999;
-  }
+    .cookiebanner {
+        z-index: 9999;
+    }
 </style>
