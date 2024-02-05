@@ -1,5 +1,5 @@
-<div id="pagination-container" {% if page.has_next and false %} hx-get="problem_list?page={{ page.next_page_number }}" hx-trigger="revealed" hx-target="this" hx-swap="outerHTML" {% endif %}>
-    <!-- <noscript> -->
+<div id="pagination-container" {% if page.has_next %} hx-get="problem_list?page={{ page.next_page_number }}" hx-trigger="revealed" hx-target="this" hx-swap="outerHTML" {% endif %}>
+    <noscript>
         {% if page.has_next or page.has_previous %}
         <nav class="pagination is-centered is-small mt-2" role="navigation" aria-label="pagination">
             <div class="inline-flex justify-center gap-1">
@@ -69,5 +69,5 @@
             </div>
         </nav>
         {% endif %}
-    <!-- </noscript> -->
+    </noscript>
 </div>

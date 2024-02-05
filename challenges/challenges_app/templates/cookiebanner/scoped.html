@@ -1,8 +1,60 @@
 {% load i18n %}
 
+<section id="cookiebanner" class="cookiebanner fixed max-w-md p-4 mx-auto bg-white border border-gray-200 dark:bg-gray-800 left-12 bottom-16 dark:border-gray-700 rounded-2xl">
+  <h2 class="font-semibold text-gray-800 dark:text-white">{{ cb_settings.title }}</h2>
+  {% if cb_settings.header_text %}
+  <p class="mt-4 text-sm text-gray-600 dark:text-gray-300">{{ cb_settings.header_text|safe }}</p>
+  {% endif %}
+  
+  <p class="mt-3 text-sm text-gray-600 dark:text-gray-300">Closing this modal default settings will be saved.</p>
+  <form id="cookiebannerForm">
+    {% for cookiegroup in cb_settings.groups %}
+    <div class="flex items-center my-3 font-semibold text-sm text-gray-600 dark:text-gray-300"">
+      <label
+        for="{{ cookiegroup.id }}"
+        class="inline-block mr-2 relative h-5 w-10 cursor-pointer rounded-full bg-gray-300 transition [-webkit-tap-highlight-color:_transparent] has-[:checked]:bg-green-500"
+        id="cookiegroup_{{ cookiegroup.id }}"
+      >
+        <input type="checkbox" id="{{ cookiegroup.id }}"
+        {% if not cookiegroup.optional %} checked disabled {% endif %}
+        name="{{ cookiegroup.id }}"
+        class="peer sr-only" />
+        <span
+        class="absolute inset-y-0 start-0 m-1 h-3 w-3 rounded-full bg-white transition-all peer-checked:start-5"
+        ></span>
+      </label> {{ cookiegroup.name }}
+    </div>
+    <p class="mt-3 text-sm text-gray-600 dark:text-gray-300">{{ cookiegroup.description }}</p>
+    <details class="mt-3 text-sm text-gray-600 dark:text-gray-300">
+      <summary class="cursor-pointer">
+        {% trans 'Show cookie details' %}
+      </summary>
+      <div class="flow-root rounded-lg border border-gray-100 py-3 shadow-sm">
+        <dl class="-my-3 divide-y divide-gray-100 text-sm">
+          {% for cookie in cookiegroup.cookies %}
+          <div class="grid grid-cols-1 gap-1 p-3 sm:grid-cols-3 sm:gap-4">
+            <dt class="font-medium text-gray-900">{{ cookie.pattern }}</dt>
+            <dd class="text-gray-700 sm:col-span-2">{{ cookie.description }}</dd>
+          </div>
+          {% endfor %}
+        </dl>
+      </div>
+    </details>
+    {% endfor %}
+  </form>
+  <div class="grid grid-cols-2 gap-4 mt-4 shrink-0">
+
+    <button class="submit-btn text-xs border text-gray-800 hover:bg-gray-100 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 font-medium rounded-lg px-4 py-2.5 duration-300 transition-colors focus:outline-none">
+      Close
+    </button>
+    <button class=" text-xs bg-gray-900 font-medium rounded-lg hover:bg-gray-700 text-white px-4 py-2.5 duration-300 transition-colors focus:outline-none">
+      Accept all
+    </button>
+  </div>
+</section>
+
 <div
-  id="cookiebannerModal"
-  class="hidden"
+  class="hidden cookiebanner"
   tabindex="-1"
   role="dialog"
   aria-labelledby="cookiebannerModalLabel"
@@ -16,52 +68,6 @@
       {% endif %}
     </div>
     <div id="cookiebannerModalBody">
-      <form id="cookiebannerForm">
-        {% for cookiegroup in cb_settings.groups %}
-        <div id="cookiegroup_{{ cookiegroup.id }}" style="margin-bottom: 10px">
-          <div>
-            <label class="switch">
-              <input
-                type="checkbox"
-                name="{{ cookiegroup.id }}"
-                {%
-                if
-                not
-                cookiegroup.optional
-                %}checked
-                disabled{%
-                endif
-                %}
-              />
-              <span class="slider"></span>
-            </label>
-            <h4 class="cookiebannerH4">{{ cookiegroup.name }}</h4>
-          </div>
-          <p>{{ cookiegroup.description }}</p>
-          <a
-            data-toggle="cookiebannerCollapse"
-            href="#detailCollapse{{ cookiegroup.id }}"
-            role="button"
-            >{% trans 'Show cookie details' %}</a
-          >
-          <div
-            class="cookiebannerCollapse"
-            id="detailCollapse{{ cookiegroup.id }}"
-          >
-            <div class="card card-body">
-              <table class="cookiebannerModalTable">
-                {% for cookie in cookiegroup.cookies %}
-                <tr>
-                  <td>{{ cookie.pattern }}</td>
-                  <td>{{ cookie.description }}</td>
-                </tr>
-                {% endfor %}
-              </table>
-            </div>
-          </div>
-        </div>
-        {% endfor %}
-      </form>
     </div>
     <div id="cookiebannerModalFooter">
       {% if cb_settings.footer_text %}
@@ -90,7 +96,7 @@
   </div>
 </div>
 
-<script>
+<script type="text/javascript">
   (() => {
     const cookiegroups = JSON.parse("{{ cookiegroups_json|escapejs }}");
 
@@ -98,7 +104,7 @@
     const cookiebannerCookie = _keyValue
       ? decodeURIComponent(_keyValue[2])
       : null;
-    const cookiebannerModal = document.getElementById("cookiebannerModal");
+    const cookiebannerModal = document.getElementById("cookiebanner");
 
     document.addEventListener("DOMContentLoaded", function () {
       if (!cookiebannerCookie) cookiebannerModal.classList.remove("hidden");
@@ -120,15 +126,7 @@
         }
       }
 
-      document
-        .querySelectorAll("a[data-toggle='cookiebannerCollapse']")
-        .forEach((a) => {
-          a.addEventListener("click", () =>
-            document.querySelector(a.hash).classList.toggle("show"),
-          );
-        });
-
-      document.querySelectorAll("input.cookiebannerSubmit").forEach((inp) => {
+      document.querySelectorAll(".submit-btn").forEach((inp) => {
         inp.addEventListener("click", () => {
           let enable_cookies;
           if (inp.name === "enable_all") {
@@ -157,162 +155,7 @@
 </script>
 
 <style>
-  p {
-    margin: 0 0 0.2em;
-  }
-
-  #cookiebannerModal {
-    --color-highlight: #73c229ff;
-    --color-button-fg: white;
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow-x: hidden;
-    overflow-y: auto;
-    background: hsla(0, 0%, 0%, 0.5);
-    font-family: Roboto, sans-serif;
-  }
-
-  #cookiebannerModal.hidden {
-    display: none;
-  }
-
-  #cookiebannerModal a {
-    color: var(--color-highlight);
-  }
-
-  #cookiebannerModalDialog {
-    background: white;
-    box-shadow: 0 0 20px 8px #000;
-  }
-
-  #cookiebannerModalHeader {
-    padding: 1rem;
-    border-bottom: 1px solid #e5e5e5;
-  }
-
-  #cookiebannerModalTitle {
-    margin: 0 0 0.4rem;
-  }
-
-  #cookiebannerModalBody {
-    padding: 1rem;
-  }
-
-  #cookiebannerModalFooter {
-    padding: 1rem;
-    border-top: 1px solid #e5e5e5;
-    text-align: right;
-  }
-
-  #cookiebannerModalFooter .text-left {
-    text-align: left;
-  }
-
-  .cookiebannerSubmit.btn {
-    font-size: 1.2rem;
-    margin: 0.2em;
-    padding: 0.3em;
-    background-color: var(--color-highlight);
-    color: var(--color-button-fg);
-    border: 0;
-  }
-
-  #cookiebannerModalFooterLinks {
-    text-align: left;
-    min-height: auto;
-    margin-bottom: auto;
-    display: inline-block;
-    float: left;
-    padding: 1rem 0;
-  }
-
-  .cookiebannerH4 {
-    display: inline-block;
-    font-size: 1.125rem;
-    font-weight: 500;
-    margin: 0.56em 0;
-  }
-
-  .cookiebannerCollapse {
-    display: none;
-  }
-
-  .cookiebannerCollapse.show {
-    display: block;
-  }
-
-  .cookiebannerModalTable {
-    font-size: 0.9rem;
-    font-style: italic;
-  }
-
-  .cookiebannerModalTable td {
-    padding: 0.1em 0.2em 0.1em;
-  }
-
-  /* The switch - the box around the slider */
-  .switch {
-    font-size: 1rem;
-    vertical-align: middle;
-    position: relative;
-    display: inline-block;
-    width: 2.5em;
-    height: 1.375em;
-    margin: 0 0.3125em 0.3125em 0;
-  }
-
-  /* Hide default HTML checkbox */
-  .switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-  }
-
-  /* The slider */
-  .slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #ccc;
-    transition:
-      transform 400ms,
-      background-color 400ms;
-  }
-
-  .slider:before {
-    position: absolute;
-    content: "";
-    height: 1.125em;
-    width: 1.125em;
-    left: 0.125em;
-    bottom: 0.125em;
-    background-color: white;
-    transition: transform 400ms;
-  }
-
-  input:checked + .slider {
-    background-color: var(--color-highlight);
-  }
-
-  input:checked:disabled + .slider {
-    opacity: 0.3;
-    cursor: not-allowed;
-  }
-
-  input:focus + .slider {
-    box-shadow: 0 0 1px var(--color-highlight);
-  }
-
-  input:checked + .slider:before {
-    transform: translateX(1.125em);
+  .cookiebanner {
+    z-index: 9999;
   }
 </style>
