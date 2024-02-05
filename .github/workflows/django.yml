@@ -27,7 +27,6 @@ jobs:
         python -m pip install --upgrade pip
         python -m pip install --upgrade pipenv
         pipenv sync
-        pipenv shell
         python challenges/manage.py makemigrations
         python challenges/manage.py migrate
     - name: Run Tests
