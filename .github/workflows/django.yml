@@ -28,7 +28,6 @@ jobs:
         python -m pip install --upgrade pipenv
         python -m pip install --upgrade Django
         pipenv sync
-        pipenv shell
         pipenv run makemigrations
         pipenv run migrate
     - name: Run Tests
