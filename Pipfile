@@ -19,9 +19,9 @@ django-cookiebanner = "*"
 
 [dev-packages]
 
-[requires]
-python_version = "3.12"
-python_full_version = "3.12.1"
+# [requires]
+# python_version = "3.12"
+# python_full_version = "3.12.1"
 
 [scripts]
 server = "python challenges/manage.py runserver"
