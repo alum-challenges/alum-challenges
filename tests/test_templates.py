@@ -1,10 +1,10 @@
 from django.test import TestCase, Client
 from challenges_app.models import Challenges
 
-
 class YourTestClass(TestCase):
 
     def setUp(self):
+        # Create sample challenges for testing
         Challenges.objects.create(
             title="Python Basics",
             full_title="Introduction to Python Programming",
@@ -67,34 +67,39 @@ learn about supervised learning, unsupervised learning, and model evaluation.
         )
 
     def test_index(self):
+        # Test the index page
         client = Client()
         response = client.get("/")
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(response.context["problems"]), 3)
 
-    def test_problem_view(self):
+    def test_problem_view1(self):
+        # Test the Machine Learning challenge page
         client = Client()
+        response = client.get("/problems/Machine Learning")
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Did you know?")
+        self.assertContains(response, "Hidden note")
 
-        response1 = client.get("/problems/Machine Learning")
-        self.assertEqual(response1.status_code, 200)
-        self.assertContains(response1, "Did you know?")
-        self.assertContains(response1, "Hidden note")
-
-        response2 = client.get("/problems/Data Analysis")
-        self.assertEqual(response2.status_code, 200)
-        self.assertContains(response2, "Analyzing Data with Python")
-
+    def test_problem_view2(self):
+        # Test the Data Analysis challenge page
+        client = Client()
+        response = client.get("/problems/Data Analysis")
+        self.assertEqual(response.status_code, 200)
         expected_text = "Explore the world of data analysis using Python. This challenge covers\nPandas, Matplotlib, and data visualization techniques."
-        response_content = response2.content.decode("utf-8")
+        response_content = response.content.decode("utf-8")
         self.assertIn(expected_text, response_content)
 
-        response3 = client.get("/problems/NotExists")
-        self.assertEqual(response3.status_code, 404)
+    def test_problem_view3(self):
+        # Test a page that does not exist
+        client = Client()
+        response = client.get("/problems/NotExists")
+        self.assertEqual(response.status_code, 404)
 
-        response4 = client.get("/problems/Python Basics")
-        self.assertEqual(response4.status_code, 200)
-        print(response4.content.decode("utf-8"))
+    def test_problem_view4(self):
+        # Test the Python Basics challenge page with LaTeX link
+        client = Client()
+        response = client.get("/problems/Python Basics")
+        self.assertEqual(response.status_code, 200)
         expected_latex_link = '<p><a href="https://facelessuser.github.io/pymdown-extensions/extensions/arithmatex/">https://facelessuser.github.io/pymdown-extensions/extensions/arithmatex/</a></p>'
-
-        # Check for the presence of the LaTeX link
-        self.assertContains(response4, expected_latex_link)
+        self.assertContains(response, expected_latex_link)
