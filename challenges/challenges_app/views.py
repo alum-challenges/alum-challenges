@@ -12,21 +12,14 @@ from django.db.utils import IntegrityError
 
 class ChallengesListView(ListView):
     model = Challenges
-    paginate_by = 2
 
 
 def index(request):
-    challenges = util.paginate(request, Challenges.objects.all().order_by("-id"), 2)
-    if util.is_htmx(request):
-        return render(
-            request,
-            "index.html",
-            {"problems": util.list_entries(), "challenges": challenges},
-        )
+    challenges = util.paginate(request, Challenges.objects.all().order_by("id"), 2)
     return render(
         request,
         "index.html",
-        {"problems": util.list_entries(), "challenges": challenges},
+        {"challenges": challenges},
     )
 
 

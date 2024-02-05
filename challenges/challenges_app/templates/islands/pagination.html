@@ -1,24 +1,21 @@
-<noscript>
-<div {% if page.has_next %} hx-get="?page={{ page.next_page_number }}" hx-trigger="revealed"
-hx-swap="outerHTML" {% endif %}>
-    {% if page.has_next or page.has_previous %}
-    <nav class="pagination is-centered is-small mt-2" role="navigation" aria-label="pagination">
-        <ul class="pagination-list">
-            {% if page.has_previous %}
-            <a class="pagination-link" aria-label="Goto page 1" href="?page=1">First Page</a>
-            <a class="pagination-link" href="?page={{ page.previous_page_number }}">«
-                Previous</a>
-            {% endif %}
-            <a class="pagination-link is-current" aria-label="Goto page {{ page.number }}">{{ page.number }}</a>
-            {% if page.has_next %}
-            <a class="pagination-link" href="?page={{ page.next_page_number }}">Next page
-                »</a>
-            <a class="pagination-link" aria-label="Goto page 4&amp;query="
-                href="?page={{ page.paginator.num_pages }}">Last
-                Page</a>
-            {% endif %}
-        </ul>
-    </nav>
-    {% endif %}
+<div {% if page.has_next %} hx-get="?page={{ page.next_page_number }}" hx-trigger="revealed" hx-swap="outerHTML"
+{% endif %}>
+    <noscript>
+        {% if page.has_next or page.has_previous %}
+        <nav class="pagination is-centered is-small mt-2" role="navigation" aria-label="pagination">
+            <ul class="pagination-list">
+                {% if page.has_previous %}
+                <a class="pagination-link" aria-label="Goto page 1" href="?page=1">First Page</a>
+                <a class="pagination-link" href="?page={{ page.previous_page_number }}">«Previous</a>
+                {% endif %}
+                <a class="pagination-link is-current" aria-label="Goto page {{ page.number }}">{{ page.number }}</a>
+                {% if page.has_next %}
+                <a class="pagination-link" href="?page={{ page.next_page_number }}">Next page»</a>
+                <a class="pagination-link" aria-label="Goto page 4&amp;query="
+                    href="?page={{ page.paginator.num_pages }}">Last Page</a>
+                {% endif %}
+            </ul>
+        </nav>
+        {% endif %}
+    </noscript>
 </div>
-</noscript>
