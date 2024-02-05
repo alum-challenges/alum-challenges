@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     # "tailwind",
     # "theme",
     "django_browser_reload",
-    "cookiebanner"
+    "cookiebanner",
 ]
 
 MIDDLEWARE = [
@@ -137,9 +137,13 @@ INTERNAL_IPS = [
 ]
 
 COOKIEBANNER = {
-    "title": _("Cookie settings"),
-    "header_text": _("We are using cookies on this website. We only use essential cookies to keep this site safe and functional."),  # This must ALWAYS remain true!!!
-    "footer_text": _("Please accept our cookies. The website doesn't function without them."),
+    "title": _("🍪 We use cookies!"),
+    "header_text": _(
+        "Hi, this website uses essential cookies to ensure its proper operation. We only use essential cookies to keep this site safe and functional."
+    ),  # This must ALWAYS remain true!!!
+    "footer_text": _(
+        "Please accept our cookies. The website doesn't function without them."
+    ),
     "groups": [
         {
             "id": "essential",
@@ -152,11 +156,15 @@ COOKIEBANNER = {
                 },
                 {
                     "pattern": "csrftoken",
-                    "description": _("This cookie prevents Cross-Site-Request-Forgery attacks."),
+                    "description": _(
+                        "This cookie prevents Cross-Site-Request-Forgery attacks."
+                    ),
                 },
                 {
                     "pattern": "sessionid",
-                    "description": _("This cookie is necessary to allow logging in, for example."),
+                    "description": _(
+                        "This cookie is necessary to allow logging in, for example."
+                    ),
                 },
             ],
         }

@@ -2,14 +2,38 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
+from django.views.generic.list import ListView
 import markdown
 from . import util
+from challenges_app.models import Challenges
 from django.db.utils import IntegrityError
 from django.http import Http404
 
 
+# class ChallengesListView(ListView):
+#     model = Challenges
+
+
 def index(request):
-    return render(request, "index.html", {"problems": util.list_entries()})
+
+    # util.paginate(request, QuerySet, amount of items per page)
+    challenges = util.paginate(request, Challenges.objects.all().order_by("id"), 30)
+
+    return render(
+        request,
+        "index.html",
+        {"challenges": challenges},
+    )
+
+
+def problem_list(request):
+    challenges = util.paginate(request, Challenges.objects.all().order_by("id"), 4)
+
+    return render(
+        request,
+        "islands/problem_list.html",
+        {"challenges": challenges},
+    )
 
 
 def login_view(request):
@@ -78,25 +102,29 @@ def signup_view(request):
 
 def problem_view(request, title):
     md = util.get_entry(title)
+    if not md:
+        return render(
+            request,
+            "error.html",
+            {"title": title, "message": "This page does not exist"},
+        )
 
-    # Handle invalid title
-    if md:
-        html = markdown.markdown(
-            md,
-            extensions=[
-                "pymdownx.highlight",
-                "pymdownx.superfences",
-                "pymdownx.arithmatex",
-                "pymdownx.magiclink",
-                "pymdownx.blocks.details",
-            ],
-            extension_configs={
-                "pymdownx.highlight": {
-                    # "pygments_style": "sas",
-                    # "linenums_style": "inline",
-                    "line_spans": "__codeline",
-                    "line_anchors": "__codelineno",
-                },
+    html = markdown.markdown(
+        md,
+        extensions=[
+            "pymdownx.highlight",
+            "pymdownx.superfences",
+            "pymdownx.arithmatex",
+            "pymdownx.magiclink",
+            "pymdownx.blocks.details",
+        ],
+        extension_configs={
+            "pymdownx.highlight": {
+                # "pygments_style": "sas",
+                # "linenums_style": "inline",
+                "line_spans": "__codeline",
+                "line_anchors": "__codelineno",
+
             },
         )
         # meta = frontmatter(md)

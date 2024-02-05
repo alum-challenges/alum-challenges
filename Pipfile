@@ -16,6 +16,7 @@ django-browser-reload = "*"
 requests = "*"
 python-frontmatter = "*"
 django-cookiebanner = "*"
+frontmatter = "*"
 
 [dev-packages]
 pytest = "*"
