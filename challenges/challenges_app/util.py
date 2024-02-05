@@ -16,7 +16,7 @@ def is_htmx(request):
 
 def paginate(request, qs, limit=2):
     """
-    Paginate QuerySet(qs)
+    Paginate QuerySet(qs), limit = amount of items per page
     Return current page
     """
     paginated_qs = Paginator(qs, limit)
