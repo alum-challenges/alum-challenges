@@ -6,23 +6,18 @@ from django.views.generic.list import ListView
 import markdown
 from . import util
 from challenges_app.models import Challenges
-
 from django.db.utils import IntegrityError
 
 
-class ChallengesListView(ListView):
-    model = Challenges
+# class ChallengesListView(ListView):
+#     model = Challenges
 
 
 def index(request):
-    challenges = util.paginate(request, Challenges.objects.all().order_by("id"), 4)
 
-    # if util.is_htmx(request):
-    #     return render(
-    #         request,
-    #         "problem_list.html",
-    #         {"challenges": challenges},
-    #     )
+    # util.paginate(request, QuerySet, amount of items per page)
+    challenges = util.paginate(request, Challenges.objects.all().order_by("id"), 30)
+
     return render(
         request,
         "index.html",
