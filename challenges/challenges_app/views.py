@@ -106,7 +106,7 @@ def signup_view(request):
 
 def problem_view(request, title):
     md = util.get_entry(title)
-    if md == None:
+    if not md:
         return render(
             request,
             "error.html",
