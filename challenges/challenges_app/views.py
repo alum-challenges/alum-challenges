@@ -103,11 +103,8 @@ def signup_view(request):
 def problem_view(request, title):
     md = util.get_entry(title)
     if not md:
-        return render(
-            request,
-            "error.html",
-            {"title": title, "message": "This page does not exist"},
-        )
+        # Return output to user in case such problem does not exist
+        raise Http404(f"The requested problem {title} does not exist.")
 
     html = markdown.markdown(
         md,
@@ -120,23 +117,17 @@ def problem_view(request, title):
         ],
         extension_configs={
             "pymdownx.highlight": {
-                # "pygments_style": "sas",
-                # "linenums_style": "inline",
                 "line_spans": "__codeline",
                 "line_anchors": "__codelineno",
+            }
+        },
+    )
 
-            },
-        )
-        # meta = frontmatter(md)
-
-        return render(
-            request,
-            "problem.html",
-            {"title": util.get_challenge(title=title).full_title, "problem": html},
-        )
-    else:
-        # Return output to user in case such problem does not exist
-         raise Http404(f"The requested problem {title} does not exist.")
+    return render(
+        request,
+        "problem.html",
+        {"title": util.get_challenge(title=title).full_title, "problem": html},
+    )
 
 
 @login_required

@@ -26,10 +26,11 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         python -m pip install --upgrade pipenv
-        python -m pip installl --upgrade Django
+        python -m pip install --upgrade Django
         pipenv sync
-        python challenges/manage.py makemigrations
-        python challenges/manage.py migrate
+        pipenv shell
+        pipenv run makemigrations
+        pipenv run migrate
     - name: Run Tests
       run: |
-        python challenges/manage.py test
+        pipenv run test
