@@ -26,7 +26,7 @@ BRANCH_NAME = "main"
 BASE_URL = "git@github.com:alum-challenges/problems.git"
 
 
-class Comman(BaseCommand):
+class Command(BaseCommand):
     def handle(self, *args, **options):
         # Entry point for the management command
         self.sync_problems()
