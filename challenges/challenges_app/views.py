@@ -7,6 +7,7 @@ import markdown
 from . import util
 from challenges_app.models import Challenges
 from django.db.utils import IntegrityError
+from django.http import Http404
 
 
 # class ChallengesListView(ListView):
@@ -123,16 +124,19 @@ def problem_view(request, title):
                 # "linenums_style": "inline",
                 "line_spans": "__codeline",
                 "line_anchors": "__codelineno",
-            },
-        },
-    )
-    # meta = frontmatter(md)
 
-    return render(
-        request,
-        "problem.html",
-        {"title": util.get_challenge(title=title).full_title, "problem": html},
-    )
+            },
+        )
+        # meta = frontmatter(md)
+
+        return render(
+            request,
+            "problem.html",
+            {"title": util.get_challenge(title=title).full_title, "problem": html},
+        )
+    else:
+        # Return output to user in case such problem does not exist
+         raise Http404(f"The requested problem {title} does not exist.")
 
 
 @login_required
