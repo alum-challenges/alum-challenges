@@ -5,7 +5,7 @@ name = "pypi"
 
 [packages]
 asgiref = "==3.7.2"
-django = "==5.*"
+Django = "*"
 sqlparse = "==0.4.4"
 typing-extensions = "==4.9.0"
 tzdata = "==2023.4"
@@ -19,10 +19,11 @@ django-cookiebanner = "*"
 frontmatter = "*"
 
 [dev-packages]
+pytest = "*"
 
-# [requires]
-# python_version = "3.12"
-# python_full_version = "3.12.1"
+[requires]
+python_version = "3.12"
+python_full_version = "3.12.1"
 
 [scripts]
 server = "python challenges/manage.py runserver"
