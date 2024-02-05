@@ -1,9 +1,4 @@
-asgiref==3.7.2
+check50==3.3.11
 Django==5.0.1
-sqlparse==0.4.4
-typing_extensions==4.9.0
-tzdata==2023.4
-python-frontmatter==1.1.0
-django-browser-reload==1.12.1
-django-cookiebanner==0.2.8
-markdown==3.5.2
+Markdown==3.3.6
+python_frontmatter==1.1.0
