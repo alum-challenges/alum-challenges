@@ -5,6 +5,7 @@ from django.shortcuts import render, redirect
 import markdown
 from . import util
 from django.db.utils import IntegrityError
+from django.http import Http404
 
 
 def index(request):
@@ -77,34 +78,37 @@ def signup_view(request):
 
 def problem_view(request, title):
     md = util.get_entry(title)
-    if md == None:
-        pass
 
-    html = markdown.markdown(
-        md,
-        extensions=[
-            "pymdownx.highlight",
-            "pymdownx.superfences",
-            "pymdownx.arithmatex",
-            "pymdownx.magiclink",
-            "pymdownx.blocks.details",
-        ],
-        extension_configs={
-            "pymdownx.highlight": {
-                # "pygments_style": "sas",
-                # "linenums_style": "inline",
-                "line_spans": "__codeline",
-                "line_anchors": "__codelineno",
+    # Handle invalid title
+    if md:
+        html = markdown.markdown(
+            md,
+            extensions=[
+                "pymdownx.highlight",
+                "pymdownx.superfences",
+                "pymdownx.arithmatex",
+                "pymdownx.magiclink",
+                "pymdownx.blocks.details",
+            ],
+            extension_configs={
+                "pymdownx.highlight": {
+                    # "pygments_style": "sas",
+                    # "linenums_style": "inline",
+                    "line_spans": "__codeline",
+                    "line_anchors": "__codelineno",
+                },
             },
-        },
-    )
-    # meta = frontmatter(md)
+        )
+        # meta = frontmatter(md)
 
-    return render(
-        request,
-        "problem.html",
-        {"title": util.get_challenge(title=title).full_title, "problem": html},
-    )
+        return render(
+            request,
+            "problem.html",
+            {"title": util.get_challenge(title=title).full_title, "problem": html},
+        )
+    else:
+        # Return output to user in case such problem does not exist
+         raise Http404(f"The requested problem {title} does not exist.")
 
 
 @login_required
