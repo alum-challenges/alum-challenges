@@ -1,3 +1,10 @@
+import re
+
+from challenges_app.models import Challenges
+from django.core.files.base import ContentFile
+from django.core.files.storage import default_storage
+import frontmatter
+
 # Pagination
 from django.core.paginator import Paginator
 
@@ -20,17 +27,8 @@ def paginate(request, qs, limit=2):
     Return current page
     """
     paginated_qs = Paginator(qs, limit)
-    page_no = request.GET.get("page")
+    page_no = int(request.GET.get("page", 1))
     return paginated_qs.get_page(page_no)
-
-
-# Source: https://cs50.harvard.edu/web/2020/projects/1/wiki/
-import re
-
-from challenges_app.models import Challenges
-from django.core.files.base import ContentFile
-from django.core.files.storage import default_storage
-import frontmatter
 
 
 def list_entries():

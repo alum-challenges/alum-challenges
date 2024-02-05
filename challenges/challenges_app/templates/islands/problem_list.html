@@ -3,4 +3,6 @@
   <kbd>{{ problem.course }}</kbd> / <kbd>Week {{ problem.week }}</kbd> /
   <a href="{% url 'problems' problem.title %}" class="group py-1 text-sky-500 dark:text-sky-400"><kbd>{{ problem.full_title}}</kbd></a>
 </li>
-{% endfor %} {% include "islands/pagination.html" with page=challenges %}
+{% endfor %}
+{% include "islands/pagination.html" with page=challenges %}
+<!-- <span {% if challenges.has_next %} hx-get="problem_list?page={{ challenges.next_page_number }}" hx-trigger="revealed" hx-target="#list" hx-swap="beforeend" {% endif %}></span>  -->

@@ -15,10 +15,27 @@ class ChallengesListView(ListView):
 
 
 def index(request):
-    challenges = util.paginate(request, Challenges.objects.all().order_by("id"), 2)
+    challenges = util.paginate(request, Challenges.objects.all().order_by("id"), 4)
+
+    # if util.is_htmx(request):
+    #     return render(
+    #         request,
+    #         "problem_list.html",
+    #         {"challenges": challenges},
+    #     )
     return render(
         request,
         "index.html",
+        {"challenges": challenges},
+    )
+
+
+def problem_list(request):
+    challenges = util.paginate(request, Challenges.objects.all().order_by("id"), 4)
+
+    return render(
+        request,
+        "islands/problem_list.html",
         {"challenges": challenges},
     )
 

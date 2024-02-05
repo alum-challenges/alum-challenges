@@ -5,7 +5,7 @@
 <article class="highlight content-center w-1/2 p-4 mx-auto">
     <h1 class="text-slate-900 text-xl font-semibold mb-4 dark:text-slate-100">Problems</h1>
     <ul id="list" class="text-slate-700 text-sm leading-6 not-prose">
-        {% include "islands/problem_list.html" %}
+        {% include "islands/problem_list.html" with page=challenges %}
     </ul>
 </article>
 {% endblock %}

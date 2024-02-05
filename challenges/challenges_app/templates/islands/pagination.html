@@ -1,21 +1,73 @@
-<div {% if page.has_next %} hx-get="?page={{ page.next_page_number }}" hx-trigger="revealed" hx-swap="outerHTML"
-{% endif %}>
-    <noscript>
+<div id="pagination-container" {% if page.has_next %} hx-get="problem_list?page={{ page.next_page_number }}" hx-trigger="revealed" hx-target="this" hx-swap="outerHTML" {% endif %}>
+    <!-- <noscript> -->
         {% if page.has_next or page.has_previous %}
         <nav class="pagination is-centered is-small mt-2" role="navigation" aria-label="pagination">
-            <ul class="pagination-list">
+            <div class="inline-flex justify-center gap-1">
                 {% if page.has_previous %}
-                <a class="pagination-link" aria-label="Goto page 1" href="?page=1">First Page</a>
-                <a class="pagination-link" href="?page={{ page.previous_page_number }}">«Previous</a>
+                <a
+                    href="?page={{ page.previous_page_number }}"
+                    class="pagination-link pagination-prev inline-flex h-8 w-8 items-center justify-center rounded border border-gray-100 bg-white text-gray-900 rtl:rotate-180 pagination-link"
+                    aria-label="Goto previous page"
+                >
+                    <span class="sr-only">Prev Page</span>
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-3 w-3"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                    >
+                        <path
+                            fill-rule="evenodd"
+                            d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                            clip-rule="evenodd"
+                        />
+                    </svg>
+                </a>
                 {% endif %}
-                <a class="pagination-link is-current" aria-label="Goto page {{ page.number }}">{{ page.number }}</a>
+
+                <form action="/" method="GET">
+                    <label for="pagination-page" class="sr-only">Page</label>
+
+                    <input
+                        type="number"
+                        class="pagination-input h-8 w-12 rounded border border-gray-100 bg-white p-0 text-center text-xs font-medium text-gray-900 [-moz-appearance:_textfield] [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none"
+                        min="1"
+                        value="{{ page.number }}"
+                        name="page"
+                        id="pagination-page"
+                        aria-label="Goto page {{ page.number }}"
+                    />
+                        / {{ page.paginator.num_pages }}
+                        <!-- hx-trigger="keyp[keyCode==13]" -->
+                        <!-- hx-get="problem_list" -->
+                        <!-- hx-target="pagination-container" -->
+                        <!-- hx-swap="outerHTML" -->
+                    <input type="submit" style="display: none;" />
+                </form>
+
                 {% if page.has_next %}
-                <a class="pagination-link" href="?page={{ page.next_page_number }}">Next page»</a>
-                <a class="pagination-link" aria-label="Goto page 4&amp;query="
-                    href="?page={{ page.paginator.num_pages }}">Last Page</a>
+                <a
+                    href="?page={{ page.next_page_number }}"
+                    class="pagination-link pagination-next inline-flex h-8 w-8 items-center justify-center rounded border border-gray-100 bg-white text-gray-900 rtl:rotate-180"
+                    aria-label="Goto next page"
+                >
+                    <span class="sr-only">Next Page</span>
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-3 w-3"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                    >
+                        <path
+                            fill-rule="evenodd"
+                            d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                            clip-rule="evenodd"
+                        />
+                    </svg>
+                </a>
                 {% endif %}
-            </ul>
+            </div>
         </nav>
         {% endif %}
-    </noscript>
+    <!-- </noscript> -->
 </div>
