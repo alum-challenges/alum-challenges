@@ -1,14 +1,14 @@
 {% extends "layout.html" %}
-{% block title %} Log in {% endblock %}
+{% block title %}Log in{% endblock %}
 {% block body %}
-<form action="{% url 'login' %}" method="post">
-    {% csrf_token %}
-    <div class="">
-        <input autofocus class="" type="text" name="username" placeholder="Username">
-    </div>
-    <div class="">
-        <input class="" type="password" name="password" placeholder="Password">
-    </div>
-    <input class="" type="submit" value="Login">
-</form>
+    <form action="{% url 'login' %}" method="post">
+        {% csrf_token %}
+        <div class="">
+            <input autofocus class="" type="text" name="username" placeholder="Username">
+        </div>
+        <div class="">
+            <input class="" type="password" name="password" placeholder="Password">
+        </div>
+        <input class="" type="submit" value="Login">
+    </form>
 {% endblock %}

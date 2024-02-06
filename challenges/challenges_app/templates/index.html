@@ -1,11 +1,10 @@
 {% extends "layout.html" %}
 {% block title %}Index{% endblock %}
-
 {% block body %}
-<article class="prose prose-slate prose-lg highlight content-center dark:prose-invert w-1/2 p-4 mx-auto">
-    <h1>Problems</h1>
-    <ul id="list" class="text-slate-700 text-sm leading-6 not-prose">
-        {% include "islands/problem_list.html" with page=challenges %}
-    </ul>
-</article>
+    <article class="prose prose-slate prose-lg highlight content-center dark:prose-invert w-1/2 p-4 mx-auto">
+        <h1>Problems</h1>
+        <ul id="list" class="text-slate-700 text-sm leading-6 not-prose">
+            {% include "islands/problem_list.html" with page=challenges %}
+        </ul>
+    </article>
 {% endblock %}

@@ -16,6 +16,7 @@ requests = "*"
 django-cookiebanner = "*"
 Django = "*"
 python-frontmatter = "*"
+djlint = "*"
 
 [dev-packages]
 pytest = "*"
