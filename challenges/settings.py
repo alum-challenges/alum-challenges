@@ -10,7 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
-# import os
+import os
+from dotenv import load_dotenv
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -20,13 +21,19 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-mi($sn9&760)$t$pb5o_43q&x%5sh55wk8ljh^i-f528o_cor+"
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False 
 
-ALLOWED_HOSTS = []
+# SECURITY WARNING: change this to domain when we have one
+ALLOWED_HOSTS = [
+    '*'
+]
 
+# SECURITY WARNING: Secure session and csrf cookies with https
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE= True
 
 # Application definition
 
