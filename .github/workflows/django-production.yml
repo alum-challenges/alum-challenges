@@ -24,7 +24,7 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Install Dependencies
       run: |
-        apt install python3-venv python3-dev libpq-dev postgresql postgresql-contrib nginx curl
+        sudo apt install -y python3-venv python3-dev libpq-dev postgresql postgresql-contrib nginx curl
         sudo -u postgres pql -c "CREATE DATABASE project;"
         sudo -u postgres pql -c "CREATE USER alum WITH PASSWORD 'password'"
         sudo -u postgres pql -c "ALTER ROLE alum SET client_encoding TO 'utf8';"
