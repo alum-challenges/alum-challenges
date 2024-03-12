@@ -1,0 +1,45 @@
+name: Django CI (Production)
+
+on:
+  push:
+    branches: [ "*" ]
+  pull_request:
+    branches: [ "*" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 4
+      matrix:
+        python-version: ["3.10"]
+
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v3
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install Dependencies
+      run: |
+        apt install python3-venv python3-dev libpq-dev postgresql postgresql-contrib nginx curl
+        sudo -u postgres pql -c "CREATE DATABASE project;"
+        sudo -u postgres pql -c "CREATE USER alum WITH PASSWORD 'password'"
+        sudo -u postgres pql -c "ALTER ROLE alum SET client_encoding TO 'utf8';"
+        sudo -u postgres pql -c "ALTER ROLE alum SET default_transaction_isolation TO 'read committed';"
+        sudo -u postgres pql -c "ALTER ROLE alum SET timezone TO 'UTC';"
+        sudo -u postgres pql -c "GRANT ALL PRIVILEGES ON DATABASE project TO alum;"
+        echo "SECRET_KEY='nonsense'" >> challenges/challenges/.env
+        echo "DATABASE_USER='alum'" >> challenges/challenges/.env
+        echo "DATABASE_PASSWORD='password'" >> challenges/challenges/.env
+        python -m pip install --upgrade pip
+        python -m pip install --upgrade pipenv
+        python -m pip install --upgrade Django
+        pipenv sync
+        pipenv run makemigrations
+        pipenv run migrate
+    - name: Run Tests
+      run: |
+        pipenv run test
