@@ -46,7 +46,7 @@ jobs:
         psql -h localhost -U postgres -c "ALTER ROLE alum SET default_transaction_isolation TO 'read committed';"
         psql -h localhost -U postgres -c "ALTER ROLE alum SET timezone TO 'UTC';"
         psql -h localhost -U postgres -c "GRANT ALL PRIVILEGES ON DATABASE project TO alum;"
-        psql -h localhost -U postgres -c "GRANT ALL ON schema public TO alum;"
+        psql -h localhost -U postgres -d project -c "GRANT ALL ON schema public TO alum;"
         echo "SECRET_KEY='nonsense'" >> challenges/challenges/.env
         echo "DATABASE_USER='alum'" >> challenges/challenges/.env
         echo "DATABASE_PASS='password'" >> challenges/challenges/.env
@@ -60,4 +60,5 @@ jobs:
     - name: Run Tests
       run: |
         pipenv run test
+
 
