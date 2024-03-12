@@ -17,6 +17,9 @@ django-cookiebanner = "*"
 Django = "*"
 python-frontmatter = "*"
 djlint = "*"
+gunicorn = "*"
+psycopg2 = "*"
+python-dotenv = "*"
 
 [dev-packages]
 pytest = "*"

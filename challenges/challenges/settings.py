@@ -22,13 +22,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-mi($sn9&760)$t$pb5o_43q&x%5sh55wk8ljh^i-f528o_cor+"
+SECRET_KEY = "!*DV!9EaQC;.WiSY_y~:kFZrPW5cSujk^>qPZ>@Doi*i7x=,f7d_azGI][0kM~v"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False 
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['146.190.35.207', '127.0.0.1', 'localhost']
 
 # Application definition
 
@@ -42,7 +41,7 @@ INSTALLED_APPS = [
     "challenges_app",
     # "tailwind",
     # "theme",
-    "django_browser_reload",
+    # "django_browser_reload",
     "cookiebanner",
 ]
 
@@ -54,7 +53,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "django_browser_reload.middleware.BrowserReloadMiddleware",
+    # "django_browser_reload.middleware.BrowserReloadMiddleware",
 ]
 
 ROOT_URLCONF = "challenges.urls"
@@ -81,10 +80,18 @@ WSGI_APPLICATION = "challenges.wsgi.application"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    },
+    # "default": {
+    #     "ENGINE": "django.db.backends.sqlite3",
+    #     "NAME": BASE_DIR / "db.sqlite3",
+    # },
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'project',
+        'USER': 'alum',
+        'PASSWORD': 'VGby8t6X992g',
+        'HOST': 'localhost',
+        'PORT': '',
+    }
 }
 
 AUTH_USER_MODEL = "auth.User"
@@ -122,7 +129,15 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = "challenges_app/static/"
+STATIC_URL = "/static/"
+import os
+path = os.getcwd()
+SITE_ROOT = os.path.abspath(os.path.join(path, os.pardir))
+SITE_ROOT = os.path.abspath(path)
+# STATICFILES_DIRS = (
+#   os.path.join(SITE_ROOT, 'challenges/challenges_app/static/'),
+# ) 
+STATIC_ROOT = "/root/alum-challenges/challenges/challenges_app/static" 
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field

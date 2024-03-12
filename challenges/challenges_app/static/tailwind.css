@@ -1653,24 +1653,16 @@ select {
   height: 0.75rem;
 }
 
-.h-4 {
-  height: 1rem;
-}
-
 .h-5 {
   height: 1.25rem;
 }
 
-.h-8 {
-  height: 2rem;
-}
-
-.h-10 {
-  height: 2.5rem;
-}
-
 .h-6 {
   height: 1.5rem;
+}
+
+.h-8 {
+  height: 2rem;
 }
 
 .w-1\/2 {
@@ -1689,16 +1681,12 @@ select {
   width: 0.75rem;
 }
 
-.w-4 {
-  width: 1rem;
+.w-6 {
+  width: 1.5rem;
 }
 
 .w-8 {
   width: 2rem;
-}
-
-.w-6 {
-  width: 1.5rem;
 }
 
 .max-w-md {
@@ -1819,10 +1807,6 @@ select {
 .bg-white {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
-}
-
-.fill-blue-600 {
-  fill: #2563eb;
 }
 
 .fill-sky-600 {
