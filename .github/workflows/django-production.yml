@@ -42,6 +42,7 @@ jobs:
       run: |
         sudo apt install -y python3-venv python3-dev libpq-dev nginx curl
         psql -h localhost -U postgres -c "CREATE USER alum WITH PASSWORD 'password';"
+        psql -h localhost -U postgres -c "ALTER USER alum CREATEDB;"
         psql -h localhost -U postgres -c "ALTER ROLE alum SET client_encoding TO 'utf8';"
         psql -h localhost -U postgres -c "ALTER ROLE alum SET default_transaction_isolation TO 'read committed';"
         psql -h localhost -U postgres -c "ALTER ROLE alum SET timezone TO 'UTC';"
