@@ -6,6 +6,12 @@ on:
   pull_request:
     branches: [ "*" ]
 
+env:
+  PGPASSWORD: postgres
+  SECRET_KEY: nonsense
+  DATABASE_USER: alum
+  DATABASE_PASSWORD: password
+
 jobs:
   build:
 
@@ -15,6 +21,16 @@ jobs:
       matrix:
         python-version: ["3.10"]
 
+    services:
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_DB: project
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 
     steps:
     - uses: actions/checkout@v3
@@ -24,13 +40,12 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Install Dependencies
       run: |
-        apt install python3-venv python3-dev libpq-dev postgresql postgresql-contrib nginx curl
-        sudo -u postgres pql -c "CREATE DATABASE project;"
-        sudo -u postgres pql -c "CREATE USER alum WITH PASSWORD 'password'"
-        sudo -u postgres pql -c "ALTER ROLE alum SET client_encoding TO 'utf8';"
-        sudo -u postgres pql -c "ALTER ROLE alum SET default_transaction_isolation TO 'read committed';"
-        sudo -u postgres pql -c "ALTER ROLE alum SET timezone TO 'UTC';"
-        sudo -u postgres pql -c "GRANT ALL PRIVILEGES ON DATABASE project TO alum;"
+        sudo apt install -y python3-venv python3-dev libpq-dev nginx curl
+        psql -h localhost -U postgres -c "CREATE USER alum WITH PASSWORD 'password';"
+        psql -h localhost -U postgres -c "ALTER ROLE alum SET client_encoding TO 'utf8';"
+        psql -h localhost -U postgres -c "ALTER ROLE alum SET default_transaction_isolation TO 'read committed';"
+        psql -h localhost -U postgres -c "ALTER ROLE alum SET timezone TO 'UTC';"
+        psql -h localhost -U postgres -c "GRANT ALL PRIVILEGES ON DATABASE project TO alum;"
         echo "SECRET_KEY='nonsense'" >> challenges/challenges/.env
         echo "DATABASE_USER='alum'" >> challenges/challenges/.env
         echo "DATABASE_PASSWORD='password'" >> challenges/challenges/.env
@@ -43,3 +58,4 @@ jobs:
     - name: Run Tests
       run: |
         pipenv run test
+
