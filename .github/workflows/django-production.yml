@@ -10,7 +10,7 @@ env:
   PGPASSWORD: postgres
   SECRET_KEY: nonsense
   DATABASE_USER: alum
-  DATABASE_PASSWORD: password
+  DATABASE_PASS: password
 
 jobs:
   build:
