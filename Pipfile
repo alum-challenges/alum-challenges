@@ -14,12 +14,12 @@ pygments = "*"
 django-browser-reload = "*"
 requests = "*"
 django-cookiebanner = "*"
-Django = "*"
 python-frontmatter = "*"
 djlint = "*"
 gunicorn = "*"
 psycopg2 = "*"
 python-dotenv = "*"
+django = "*"
 
 [dev-packages]
 pytest = "*"
