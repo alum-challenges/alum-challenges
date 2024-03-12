@@ -6,6 +6,12 @@ on:
   pull_request:
     branches: [ "*" ]
 
+env:
+  PGPASSWORD: postgres
+  SECRET_KEY: nonsense
+  DATABASE_USER: alum
+  DATABASE_PASSWORD: password
+
 jobs:
   build:
 
@@ -25,7 +31,6 @@ jobs:
     - name: Install Dependencies
       run: |
         sudo apt install -y python3-venv python3-dev libpq-dev postgresql postgresql-contrib nginx curl
-        export PGPASSWORD='postgres'
         sudo systemctl restart postgresql
         sudo -u postgres psql -h localhost -c "CREATE DATABASE project;"
         sudo -u postgres psql -c "CREATE USER alum WITH PASSWORD 'password';"
