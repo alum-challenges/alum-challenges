@@ -48,7 +48,7 @@ jobs:
         psql -h localhost -U postgres -c "GRANT ALL PRIVILEGES ON DATABASE project TO alum;"
         echo "SECRET_KEY='nonsense'" >> challenges/challenges/.env
         echo "DATABASE_USER='alum'" >> challenges/challenges/.env
-        echo "DATABASE_PASSWORD='password'" >> challenges/challenges/.env
+        echo "DATABASE_PASS='password'" >> challenges/challenges/.env
         python -m pip install --upgrade pip
         python -m pip install --upgrade pipenv
         python -m pip install --upgrade Django
