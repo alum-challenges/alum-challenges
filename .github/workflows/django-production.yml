@@ -25,8 +25,9 @@ jobs:
     - name: Install Dependencies
       run: |
         sudo apt install -y python3-venv python3-dev libpq-dev postgresql postgresql-contrib nginx curl
+        sudo systemctl restart postgresql
         sudo -u postgres psql -h localhost -c "CREATE DATABASE project;"
-        sudo -u postgres psql -c "CREATE USER alum WITH PASSWORD 'password'"
+        sudo -u postgres psql -c "CREATE USER alum WITH PASSWORD 'password';"
         sudo -u postgres psql -c "ALTER ROLE alum SET client_encoding TO 'utf8';"
         sudo -u postgres psql -c "ALTER ROLE alum SET default_transaction_isolation TO 'read committed';"
         sudo -u postgres psql -c "ALTER ROLE alum SET timezone TO 'UTC';"
