@@ -1,0 +1,6 @@
+ALTER USER alum CREATEDB;
+ALTER ROLE alum SET client_encoding TO 'utf8';
+ALTER ROLE alum SET default_transaction_isolation TO 'read committed';
+ALTER ROLE alum SET timezone TO 'UTC';
+GRANT ALL PRIVILEGES ON DATABASE project TO alum;
+GRANT ALL ON schema public TO alum;
