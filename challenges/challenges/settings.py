@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     # "theme",
     # "django_browser_reload",
     "cookiebanner",
+    "social_django",
 ]
 
 MIDDLEWARE = [
@@ -54,6 +55,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     # "django_browser_reload.middleware.BrowserReloadMiddleware",
+    "social_django.middleware.SocialAuthExceptionMiddleware",
 ]
 
 ROOT_URLCONF = "challenges.urls"
@@ -69,6 +71,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "social_django.context_processors.backends",
             ],
         },
     },
@@ -87,14 +90,28 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'project',
-        'USER': os.getenv('DATABASE_USER'),
-        'PASSWORD': os.getenv('DATABASE_PASS'),
-        'HOST': 'localhost',
+        # 'USER': os.getenv('DATABASE_USER'),
+        # 'PASSWORD': os.getenv('DATABASE_PASS'),
+        'USER': 'Shupula',
+        'PASSWORD': 'vbEid4p2Mg4a',
+        'HOST': '146.190.35.207',
         'PORT': '',
     }
 }
 
 AUTH_USER_MODEL = "auth.User"
+
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.github.GithubOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+SOCIAL_AUTH_GITHUB_KEY = '511ac9c662b605337ad3'
+SOCIAL_AUTH_GITHUB_SECRET = '7481e083ecb15906e271ef1a45088bd745a737e7'
+
+SOCIAL_AUTH_URL_NAMESPACE = 'social'
+LOGIN_URL = '/auth/login/github/'
+LOGIN_REDIRECT_URL = '/'
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
