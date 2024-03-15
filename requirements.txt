@@ -2,3 +2,4 @@ check50==3.3.11
 Django==5.0.1
 Markdown==3.3.6
 python_frontmatter==1.1.0
+social-auth-app-django==6.2.0

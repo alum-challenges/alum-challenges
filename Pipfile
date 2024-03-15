@@ -21,6 +21,7 @@ psycopg2 = "*"
 python-dotenv = "*"
 django = "*"
 django-allauth = "*"
+social-auth-app-django = "*"
 
 [dev-packages]
 pytest = "*"
