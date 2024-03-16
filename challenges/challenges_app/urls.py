@@ -1,4 +1,4 @@
-from django.urls import path, include
+from django.urls import path
 
 from . import views
 
@@ -10,5 +10,4 @@ urlpatterns = [
     path("signup", views.signup_view, name="signup"),
     path("account", views.account_view, name="account"),
     path("problems/<str:title>", views.problem_view, name="problems"),
-    path('social-auth/', include('social_django.urls', namespace='social')),
 ]
