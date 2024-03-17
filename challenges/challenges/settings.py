@@ -109,7 +109,7 @@ SOCIAL_AUTH_GITHUB_SECRET = '7481e083ecb15906e271ef1a45088bd745a737e7'
 
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = '/'
-SECURE_PROXY_SSL_HEADER=('HTTP_X_FORWARDED_PROTO', 'https')
+SOCIAL_AUTH_GITHUB_CALLBACK_URL = 'https://alumchallenges.dev/social-auth/complete/github/'
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
