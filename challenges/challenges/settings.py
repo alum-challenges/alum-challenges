@@ -72,6 +72,7 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
                 "social_django.context_processors.backends",
+                "social_django.context_processors.login_redirect",
             ],
         },
     },
@@ -107,9 +108,8 @@ AUTHENTICATION_BACKENDS = (
 SOCIAL_AUTH_GITHUB_KEY = '511ac9c662b605337ad3'
 SOCIAL_AUTH_GITHUB_SECRET = '7481e083ecb15906e271ef1a45088bd745a737e7'
 
-LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = '/'
-SOCIAL_AUTH_GITHUB_CALLBACK_URL = 'https://alumchallenges.dev/social-auth/complete/github/'
+LOGOUT_REDIRECT_URL = '/'
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
