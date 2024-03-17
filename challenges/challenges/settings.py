@@ -27,7 +27,7 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True # TEMPORARY
 
-ALLOWED_HOSTS = ['146.190.35.207', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['alumchallenges.dev', '146.190.35.207', '127.0.0.1', 'localhost']
 
 # Application definition
 
@@ -59,6 +59,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = "challenges.urls"
+ROOT_URL = "https://alumchallenges.dev/"
 
 TEMPLATES = [
     {
@@ -112,6 +113,15 @@ SOCIAL_AUTH_GITHUB_CALLBACK_URL = 'https://alumchallenges.dev/social-auth/comple
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
+
+CSRF_TRUSTED_ORIGINS = ['https://alumchallenges.dev/', 'https://alumchallenges.dev', 'alumchallenges.dev']
+CORS_ORIGIN_WHITELIST = [
+    'https://alumchallenges.dev/',
+    'https://alumchallenges.dev',
+    'alumchallenges.dev',
+    # Add other allowed origins if needed
+]
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
