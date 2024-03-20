@@ -114,7 +114,7 @@ SOCIAL_AUTH_GITHUB_CALLBACK_URL = 'https://alumchallenges.dev/social-auth/comple
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
-CSRF_TRUSTED_ORIGINS = ['https://alumchallenges.dev/', 'https://alumchallenges.dev', 'alumchallenges.dev']
+CSRF_TRUSTED_ORIGINS = ['https://alumchallenges.dev/', 'https://alumchallenges.dev']
 CORS_ORIGIN_WHITELIST = [
     'https://alumchallenges.dev/',
     'https://alumchallenges.dev',
