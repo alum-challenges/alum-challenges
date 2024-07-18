@@ -1,10 +1,9 @@
 {% extends "layout.html" %}
 {% block title %}Index{% endblock %}
 {% block body %}
-    <article class="prose prose-slate prose-lg highlight content-center dark:prose-invert w-1/2 p-4 mx-auto">
+    <article class="prose prose-slate prose-lg content-center dark:prose-invert p-4 mx-auto">
         <h1>Problems</h1>
-        <ul id="list" class="text-slate-700 text-sm leading-6 not-prose">
+	<p>Welcome to Alum Challenges! This project is a collection of practice problems and tools created by CS50 alumni designed as additional practice for students of Harvard's CS50 courses. This project is created and maintained by CS50 alumni and fellow students of CS50.</p>
             {% include "islands/problem_list.html" with page=challenges %}
-        </ul>
     </article>
 {% endblock %}

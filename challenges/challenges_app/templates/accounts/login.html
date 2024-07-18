@@ -9,6 +9,13 @@
         <div class="">
             <input class="" type="password" name="password" placeholder="Password">
         </div>
+        <div>
+            <button class="btn btn-primary mb-2">
+                <a href="{% url 'social:begin' 'github' %}">
+                    Log in via GitHub
+                </a>
+            </button>
+        </div>
         <input class="" type="submit" value="Login">
     </form>
 {% endblock %}

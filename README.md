@@ -27,6 +27,9 @@ pipenv run server
 # migrating
 pipenv run makemigrations
 pipenv run migrate
+
+# syncing changes to problems repo
+pipenv run sync_problems
 ```
 
 ## Usage of check50:

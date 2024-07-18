@@ -22,13 +22,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-mi($sn9&760)$t$pb5o_43q&x%5sh55wk8ljh^i-f528o_cor+"
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = True # TEMPORARY
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['alumchallenges.dev', '146.190.35.207', '127.0.0.1', 'localhost']
 
 # Application definition
 
@@ -42,8 +41,9 @@ INSTALLED_APPS = [
     "challenges_app",
     # "tailwind",
     # "theme",
-    "django_browser_reload",
+    # "django_browser_reload",
     "cookiebanner",
+    "social_django",
 ]
 
 MIDDLEWARE = [
@@ -54,10 +54,12 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "django_browser_reload.middleware.BrowserReloadMiddleware",
+    # "django_browser_reload.middleware.BrowserReloadMiddleware",
+    "social_django.middleware.SocialAuthExceptionMiddleware",
 ]
 
 ROOT_URLCONF = "challenges.urls"
+ROOT_URL = "https://alumchallenges.dev/"
 
 TEMPLATES = [
     {
@@ -70,6 +72,8 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "social_django.context_processors.backends",
+                "social_django.context_processors.login_redirect",
             ],
         },
     },
@@ -81,13 +85,43 @@ WSGI_APPLICATION = "challenges.wsgi.application"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    },
+    # "default": {
+    #     "ENGINE": "django.db.backends.sqlite3",
+    #     "NAME": BASE_DIR / "db.sqlite3",
+    # },
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'project',
+        'USER': os.getenv('DATABASE_USER'),
+        'PASSWORD': os.getenv('DATABASE_PASS'),
+        'HOST': 'localhost',
+        'PORT': '',
+    }
 }
 
 AUTH_USER_MODEL = "auth.User"
+
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.github.GithubOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+SOCIAL_AUTH_GITHUB_KEY = '511ac9c662b605337ad3'
+SOCIAL_AUTH_GITHUB_SECRET = '7481e083ecb15906e271ef1a45088bd745a737e7'
+
+SOCIAL_AUTH_GITHUB_CALLBACK_URL = 'https://alumchallenges.dev/social-auth/complete/github/'
+
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+
+CSRF_TRUSTED_ORIGINS = ['https://alumchallenges.dev/', 'https://alumchallenges.dev']
+CORS_ORIGIN_WHITELIST = [
+    'https://alumchallenges.dev/',
+    'https://alumchallenges.dev',
+    'alumchallenges.dev',
+    # Add other allowed origins if needed
+]
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -122,7 +156,15 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = "challenges_app/static/"
+STATIC_URL = "/static/"
+import os
+path = os.getcwd()
+SITE_ROOT = os.path.abspath(os.path.join(path, os.pardir))
+SITE_ROOT = os.path.abspath(path)
+# STATICFILES_DIRS = (
+#   os.path.join(SITE_ROOT, 'challenges/challenges_app/static/'),
+# ) 
+STATIC_ROOT = "/root/alum-challenges/challenges/challenges_app/static" 
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
@@ -170,3 +212,41 @@ COOKIEBANNER = {
         }
     ],
 }
+
+# A sample logging configuration. The only tangible logging
+# performed by this configuration is to send an email to
+# the site admins on every HTTP 500 error when DEBUG=False.
+# See http://docs.djangoproject.com/en/dev/topics/logging for
+# more details on how to customize your logging configuration.
+ADMINS = [('Makaze', 'christopherslane.work@gmail.com')]
+
+#LOGGING = {
+#    'version': 1,
+#    'disable_existing_loggers': False,
+#    'filters': {
+#        'require_debug_false': {
+#            '()': 'django.utils.log.RequireDebugFalse'
+#        }
+#    },
+#    'handlers': {
+#        'mail_admins': {
+#            'level': 'ERROR',
+#            'filters': ['require_debug_false'],
+#            'class': 'django.utils.log.AdminEmailHandler'
+#        },
+#        'applogfile': {
+#            'level':'DEBUG',
+#            'class':'logging.handlers.RotatingFileHandler',
+#            'filename': os.path.join(SITE_ROOT, 'APPNAME.log'),
+#            'maxBytes': 1024*1024*15, # 15MB
+#            'backupCount': 10,
+#        }
+#    },
+#    'loggers': {
+#        'django.request': {
+#            'handlers': ['mail_admins'],
+#            'level': 'ERROR',
+#            'propagate': True,
+#        },
+#    }
+#}

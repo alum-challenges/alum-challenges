@@ -1,3 +1,5 @@
+
+<ul id="list" class="text-slate-700 text-sm leading-6 not-prose">
 {% for problem in challenges %}
     <li>
         <kbd>{{ problem.course }}</kbd> / <kbd>Week {{ problem.week }}</kbd> /
@@ -5,5 +7,31 @@
            class="group py-1 text-sky-500 dark:text-sky-400"><kbd>{{ problem.full_title }}</kbd></a>
     </li>
 {% endfor %}
+</ul>
+<div class="w-full">
+  <div class="overflow-x-auto mt-6">
+    <table class="table-auto border-collapse w-full">
+      <thead class="border-0">
+        <tr class="rounded-lg text-sm font-medium text-gray-700 text-left" style="font-size: 0.9674rem">
+          <th class="px-4 py-2 bg-gray-200 rounded-l-lg" style="background-color:#f8f8f8">Title</th>
+          <th class="px-4 py-2 " style="background-color:#f8f8f8">Course</th>
+          <th class="px-4 py-2 rounded-r-lg" style="background-color:#f8f8f8">Week</th>
+        </tr>
+      </thead>
+      <tbody class="text-sm font-normal text-gray-700">
+	{% for problem in challenges %}
+        <tr class="hover:bg-gray-100 border-b border-gray-200 py-10">
+          <td class="px-4 py-4">
+            <a href="{% url 'problems' problem.title %}"
+               class="group py-1 text-sky-500 dark:text-sky-400"><kbd>{{ problem.full_title }}</kbd></a>
+	  </td>
+	  <td class="px-4 py-4">{{ problem.course }}</td>
+	  <td class="px-4 py-4">Week {{ problem.week }}</td>
+        </tr>
+	{% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
 {% include "islands/pagination.html" with page=challenges %}
 <!-- <span {% if challenges.has_next %} hx-get="problem_list?page={{ challenges.next_page_number }}" hx-trigger="revealed" hx-target="#list" hx-swap="beforeend" {% endif %}></span>  -->
