@@ -130,7 +130,7 @@ def problem_view(request, title):
     )
 
 
-def graph_view(request, title):
+def graph_view(request):
     return render(
         request,
         "graph.html",
