@@ -130,6 +130,14 @@ def problem_view(request, title):
     )
 
 
+def graph_view(request, title):
+    return render(
+        request,
+        "graph.html",
+        {"title": util.get_challenge(title=title).full_title, "problem": html},
+    )
+
+
 @login_required
 def account_view(request):
     return render(request, "accounts/account.html")
