@@ -21,8 +21,17 @@ Note: This project is an initiative of enthusiastic CS50 alums. This project is 
 ## Usage:
 
 ``` shell
+if [ ! -f "./.venv"]; then
+    python -m venv .venv
+fi
+if [ ! -f "./challenges/challenges/.env"]; then
+    echo 'SECRET_KEY=""' >> challenges/challenges/.env
+    echo 'DATABASE_USER=""' >> challenges/challenges/.env
+    echo 'DATABASE_PASS=""' >> challenges/challenges/.env
+fi
+# make sure ./challenges/challenges/.env is filled in
+
 pipenv sync
-pipenv run server
 
 # migrating
 pipenv run makemigrations
@@ -30,6 +39,8 @@ pipenv run migrate
 
 # syncing changes to problems repo
 pipenv run sync_problems
+
+pipenv run server
 ```
 
 ## Usage of check50:
