@@ -134,7 +134,7 @@ def graph_view(request):
     return render(
         request,
         "graph.html",
-        {"title": util.get_challenge(title=title).full_title, "problem": html},
+        {},
     )
 
 
